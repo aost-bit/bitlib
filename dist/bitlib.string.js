@@ -7,9 +7,9 @@
     self.type = "bitlib.string";
 
     self.contains = function (str, val) {
-      str = str || "", val = val || [];
+      str = str || "";
 
-      if (!str || !bitlib.common.isString(str)) {
+      if (!bitlib.common.isString(str)) {
         return false;
       }
 
@@ -19,7 +19,7 @@
       }
 
       for (var i = 0, len = val.length; i < len; i++) {
-        if (str.indexOf(val[i]) > -1) {
+        if (bitlib.common.isString(val) && -1 < str.indexOf(val[i])) {
           return true;
         }
       }
@@ -89,7 +89,7 @@
         return str.toString();
       }
 
-      return (Array(length).join(fill) + str).slice(-length);
+      return (Array(length + 1).join(fill) + str).slice(-length);
     };
 
     /**
@@ -103,7 +103,7 @@
         return str.toString();
       }
 
-      return (str + Array(length).join(fill)).slice(0, length);
+      return (str + Array(length + 1).join(fill)).slice(0, length);
     };
 
     self.zeroPadding = function (val, length) {
@@ -114,7 +114,13 @@
     self.toBoolean = function (val) {
       if (self.isString(val)) {
         val = $.trim(val || "false").toLowerCase();
-        return (val === "true" || val === "valid" || val === "yes" || val === "ok");
+
+        return self.contains(val, [
+          "true",
+          "valid",
+          "yes",
+          "ok"
+        ]);
       }
 
       return bitlib.common.toBoolean(val);

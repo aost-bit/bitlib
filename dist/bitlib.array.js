@@ -7,7 +7,7 @@
     self.type = "bitlib.array";
 
     self.contains = function (arr, elems) {
-      arr = arr || [], elems = elems || [];
+      arr = arr || [];
 
       if (!bitlib.common.isArray(arr)) {
         return false;
@@ -19,7 +19,7 @@
       }
 
       for (var i = 0, len = elems.length; i < len; i++) {
-        if ($.inArray(elems[i], arr) > -1) {
+        if (-1 < $.inArray(elems[i], arr)) {
           return true;
         }
       }

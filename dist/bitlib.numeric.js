@@ -234,6 +234,16 @@
       return true;
     };
 
+    Numeric.prototype.setLimitMax = function (val) {
+      this._setLimitMax(val);
+      return this;
+    };
+
+    Numeric.prototype.setLimitMin = function (val) {
+      this._setLimitMin(val);
+      return this;
+    };
+
     Numeric.getClassName = function () {
       return className;
     };
