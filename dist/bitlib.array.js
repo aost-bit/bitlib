@@ -1,4 +1,6 @@
-﻿(function (bitlib) {
+﻿import { setTimeout } from "timers";
+
+(function (bitlib) {
   "use strict";
 
   bitlib.array = (function () {
@@ -107,6 +109,37 @@
       }
 
       return false;
+    };
+
+    self.eachTimeout = function (arr, callback, interval) {
+      var defer = $.Deferred();
+
+      if (!bitlib.common.isArray(arr) || arr.length === 0 || !bitlib.common.isFunction(callback)) {
+        return defer.resolve().promise();
+      }
+
+      if (!bitlib.common.isNumber(interval) || interval < 10) {
+        interval = 10;
+      }
+
+      var i = 0,
+        len = arr.length;
+
+      var eachTimeout = function () {
+        var rt = callback(i, arr[i]);
+
+        if (rt === false || i === len - 1) {
+          defer.resolve();
+          return this;
+        }
+
+        i++;
+        setTimeout(eachTimeout, interval);
+      };
+
+      setTimeout(eachTimeout, 0);
+
+      return defer.promise();
     };
 
     return self;

@@ -147,6 +147,48 @@
       return false;
     };
 
+    self.eachTimeout = function (obj, callback, interval) {
+      var defer = $.Deferred();
+
+      if (!bitlib.common.isObject(obj) || !bitlib.common.isFunction(callback)) {
+        return defer.resolve().promise();
+      }
+
+      if (!bitlib.common.isNumber(interval) || interval < 10) {
+        interval = 10;
+      }
+
+      var keys = [];
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          keys.push(key);
+        }
+      }
+
+      var i = 0,
+        len = keys.length;
+
+      if (len === 0) {
+        return defer.resolve().promise();
+      }
+
+      var eachTimeout = function () {
+        var rt = callback(keys[i], obj[keys[i]]);
+
+        if (rt === false || i === len - 1) {
+          defer.resolve();
+          return this;
+        }
+
+        i++;
+        setTimeout(eachTimeout, interval);
+      };
+
+      setTimeout(eachTimeout, 0);
+
+      return defer.promise();
+    };
+
     return self;
   }());
 

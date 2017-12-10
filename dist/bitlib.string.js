@@ -238,13 +238,11 @@
       return !!str.match(/^<[a-z]+>.*<\/[a-z]+>$/ig);
     };
 
-    var DEFAULT_TEXT = "---";
-
     self.toText = function () {
       var args = [];
       args.push.apply(args, arguments);
 
-      var defaultVal = DEFAULT_TEXT,
+      var defaultVal = "---",
         maxLength = -1;
 
       for (var i = 1, len = args.length; i < len; i++) {
@@ -276,7 +274,7 @@
       val = val || "";
 
       if (bitlib.common.isNullOrUndefined(defaultVal)) {
-        defaultVal = DEFAULT_TEXT;
+        defaultVal = "---";
       }
 
       var val = self.toText(val, defaultVal);
@@ -297,7 +295,7 @@
       args.push.apply(args, arguments);
 
       var delimiter = ",",
-        defaultVal = DEFAULT_TEXT,
+        defaultVal = "---",
         maxLength = -1;
 
       var i = 0,
@@ -349,7 +347,7 @@
       args.push.apply(args, arguments);
 
       var delimiter = ",",
-        defaultVal = DEFAULT_TEXT,
+        defaultVal = "---",
         maxLength = -1;
 
       var i = 0,
