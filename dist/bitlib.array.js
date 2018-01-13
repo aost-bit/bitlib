@@ -1,6 +1,4 @@
-﻿import { setTimeout } from "timers";
-
-(function (bitlib) {
+﻿(function (bitlib) {
   "use strict";
 
   bitlib.array = (function () {
