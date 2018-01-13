@@ -8,12 +8,24 @@
 
     self.type = "bitlib.array";
 
+    self.isEmpty = function (arr) {
+      if (!bitlib.common.isArray(arr) && !bitlib.common.isObservableArray(arr)) {
+        return false;
+      }
+
+      arr = bitlib.common.isObservable(arr) ? arr() : arr;
+
+      return (arr.length === 0);
+    };
+
     self.contains = function (arr, elems) {
       arr = arr || [];
 
-      if (!bitlib.common.isArray(arr)) {
+      if (!bitlib.common.isArray(arr) && !bitlib.common.isObservableArray(arr)) {
         return false;
       }
+
+      arr = bitlib.common.isObservable(arr) ? arr() : arr;
 
       elems = bitlib.common.isArray(elems) ? elems : [elems];
       if (elems.length === 0) {

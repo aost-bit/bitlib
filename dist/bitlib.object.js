@@ -6,6 +6,13 @@
 
     self.type = "bitlib.object";
 
+    self.isEmpty = function (obj) {
+      if (!bitlib.common.isObject(obj)) {
+        return true;
+      }
+      return $.isEmptyObject(obj);
+    };
+
     self.getPropertyLength = function (obj) {
       obj = obj || {};
 

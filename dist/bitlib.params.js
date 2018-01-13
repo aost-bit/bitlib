@@ -199,7 +199,7 @@
 
       if (!bitlib.browser.isSupportSessionStorage()) {
         var message = "このブラウザは SessionStorage 機能をサポートしていません.\n" +
-          "Hydrangea では、この機能が必須要件となります.";
+          "SessionParameter では、この機能が必須要件となります.";
 
         bitlib.logger.error(message).show();
 
@@ -375,7 +375,7 @@
         var message = "このブラウザは LocalStorage 機能をサポートしていません.\n";
 
         if (!bitlib.browser.isSupportSessionStorage()) {
-          message += "Hydrangea では、SessionStorage 機能が必須要件となります.";
+          message += "LocalParameter では、SessionStorage 機能が必須要件となります.";
           bitlib.logger.error(message).show();
 
           isAvailable = false;

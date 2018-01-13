@@ -58,6 +58,175 @@
     }
   });
 
+  bitlib.ko.addBindingHandler("invisibility", {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isInvisible = valueAccessor();
+      isInvisible = ko.isObservable(isInvisible) ? isInvisible() : isInvisible;
+
+      if (isInvisible) {
+        $(element)
+          .addClass("invisible");
+      } else {
+        $(element)
+          .addClass("visible");
+      }
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isInvisible = valueAccessor();
+      isInvisible = ko.isObservable(isInvisible) ? isInvisible() : isInvisible;
+
+      if (isInvisible) {
+        $(element)
+          .removeClass("visible")
+          .addClass("invisible");
+      } else {
+        $(element)
+          .removeClass("invisible")
+          .addClass("visible");
+      }
+    }
+  });
+
+  bitlib.ko.addBindingHandler("validity", {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isValid = valueAccessor();
+      isValid = ko.isObservable(isValid) ? isValid() : isValid;
+
+      if (isValid) {
+        $(element)
+          .addClass("valid");
+      } else {
+        $(element)
+          .addClass("invalid");
+      }
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isValid = valueAccessor();
+      isValid = ko.isObservable(isValid) ? isValid() : isValid;
+
+      if (isValid) {
+        $(element)
+          .removeClass("invalid")
+          .addClass("valid");
+      } else {
+        $(element)
+          .removeClass("valid")
+          .addClass("invalid");
+      }
+    }
+  });
+
+  bitlib.ko.addBindingHandler("invalidity", {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isInvalid = valueAccessor();
+      isInvalid = ko.isObservable(isInvalid) ? isInvalid() : isInvalid;
+
+      if (isInvalid) {
+        $(element)
+          .addClass("invalid");
+      } else {
+        $(element)
+          .addClass("valid");
+      }
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isInvalid = valueAccessor();
+      isInvalid = ko.isObservable(isInvalid) ? isInvalid() : isInvalid;
+
+      if (isInvalid) {
+        $(element)
+          .removeClass("valid")
+          .addClass("invalid");
+      } else {
+        $(element)
+          .removeClass("invalid")
+          .addClass("valid");
+      }
+    }
+  });
+
+  bitlib.ko.addBindingHandler("availability", {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isAvailable = valueAccessor();
+      isAvailable = ko.isObservable(isAvailable) ? isAvailable() : isAvailable;
+
+      if (isAvailable) {
+        $(element)
+          .addClass("available");
+      } else {
+        $(element)
+          .addClass("inavailable");
+      }
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isAvailable = valueAccessor();
+      isAvailable = ko.isObservable(isAvailable) ? isAvailable() : isAvailable;
+
+      if (isAvailable) {
+        $(element)
+          .removeClass("inavailable")
+          .addClass("available");
+      } else {
+        $(element)
+          .removeClass("available")
+          .addClass("inavailable");
+      }
+    }
+  });
+
+  bitlib.ko.addBindingHandler("inavailability", {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isInavailable = valueAccessor();
+      isInavailable = ko.isObservable(isInavailable) ? isInavailable() : isInavailable;
+
+      if (isInavailable) {
+        $(element)
+          .addClass("inavailable");
+      } else {
+        $(element)
+          .addClass("available");
+      }
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isInavailable = valueAccessor();
+      isInavailable = ko.isObservable(isInavailable) ? isInavailable() : isInavailable;
+
+      if (isInavailable) {
+        $(element)
+          .removeClass("available")
+          .addClass("inavailable");
+      } else {
+        $(element)
+          .removeClass("inavailable")
+          .addClass("available");
+      }
+    }
+  });
+
+  bitlib.ko.addBindingHandler("focus", {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isFocused = valueAccessor();
+      isFocused = ko.isObservable(isFocused) ? isFocused() : isFocused;
+
+      if (isFocused) {
+        $(element)
+          .addClass("focused");
+      }
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var isFocused = valueAccessor();
+      isFocused = ko.isObservable(isFocused) ? isFocused() : isFocused;
+
+      if (isFocused) {
+        $(element)
+          .addClass("focused");
+      } else {
+        $(element)
+          .removeClass("focused");
+      }
+    }
+  });
+
   bitlib.ko.addBindingHandler("stopEventPropagation", {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
       var targetEvent = valueAccessor();
