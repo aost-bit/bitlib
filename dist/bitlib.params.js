@@ -16,19 +16,44 @@
       var params = {};
       for (var key in initParams) {
         if (initParams.hasOwnProperty(key)) {
-          params[key.toLowerCase()] = initParams[key];
+          params[key] = initParams[key];
         }
       }
+
+      self._exists = function (name) {
+        name = (name || "").toLowerCase();
+
+        if (!name || !bitlib.common.isString(name)) {
+          return false;
+        }
+
+        var clone = bitlib.common.copyDeep(params);
+
+        for (var k in clone) {
+          if (clone.hasOwnProperty(k) && k.toLowerCase() === name) {
+            return true;
+          }
+        }
+
+        return false;
+      };
 
       self._get = function (name) {
         name = (name || "").toLowerCase();
 
-        if (!name) {
+        if (!name || !bitlib.common.isString(name)) {
           return undefined;
         }
 
         var clone = bitlib.common.copyDeep(params);
-        return clone[name];
+
+        for (var k in clone) {
+          if (clone.hasOwnProperty(k) && k.toLowerCase() === name) {
+            return clone[k];
+          }
+        }
+
+        return undefined;
       };
 
       self._getAll = function () {
@@ -36,11 +61,20 @@
       };
 
       self._set = function (name, val) {
-        name = (name || "").toLowerCase();
+        name = name || "";
 
-        if (name) {
-          params[name] = val;
+        if (!name || !bitlib.common.isString(name)) {
+          return self;
         }
+
+        for (var k in params) {
+          if (params.hasOwnProperty(k) && k.toLowerCase() === name.toLowerCase()) {
+            params[k] = val;
+            return self;
+          }
+        }
+
+        params[name] = val;
 
         return self;
       };
@@ -48,8 +82,15 @@
       self._remove = function (name) {
         name = (name || "").toLowerCase();
 
-        if (params.hasOwnProperty(name)) {
-          delete params[name];
+        if (!name || !bitlib.common.isString(name)) {
+          return self;
+        }
+
+        for (var k in params) {
+          if (params.hasOwnProperty(k) && k.toLowerCase() === name) {
+            delete params[k];
+            break;
+          }
         }
 
         return self;
@@ -63,10 +104,11 @@
       return self;
     }
 
+    LooseDictionary.prototype.exists = function (name) {
+      return this._exists(name);
+    };
+
     LooseDictionary.prototype.get = function (name) {
-      if (!name) {
-        return undefined;
-      }
       return this._get(name);
     };
 
@@ -75,16 +117,14 @@
     };
 
     LooseDictionary.prototype.set = function (name, val) {
-      if (name) {
-        this._set(name, val);
-      }
+      this._set(name, val);
       return this;
     };
 
     LooseDictionary.prototype.setIfNotFound = function (name, val) {
       var self = this;
 
-      if (!name) {
+      if (!name || !bitlib.common.isString(name)) {
         return self;
       }
 
@@ -97,19 +137,23 @@
     };
 
     LooseDictionary.prototype.remove = function (name) {
-      if (name) {
-        this._remove(name);
-      }
+      this._remove(name);
       return this;
     };
 
     LooseDictionary.prototype.removeWithout = function (names) {
-      names = names || [];
+      var self = this;
 
-      var self = this,
-        clone = self._getAll();
+      names = names || [];
+      names = bitlib.common.isArray(names) ? names : [names];
+
+      var clone = self._getAll();
 
       self._clear();
+
+      if (!bitlib.common.isArray(names)) {
+        return self;
+      }
 
       for (var i = 0, len = names.length; i < len; i++) {
         if (clone.hasOwnProperty(names[i])) {
@@ -214,20 +258,19 @@
     }
 
     SessionParameter.prototype.exists = function (name) {
-      if (!name) {
+      if (!name || !bitlib.common.isString(name)) {
         return false;
       }
-
-      var clone = looseDictionary.clone();
-      return clone.hasOwnProperty(name);
+      return looseDictionary.exists(name);
     };
 
     SessionParameter.prototype.get = function (name) {
-      if (!name) {
+      if (!name || !bitlib.common.isString(name)) {
         return "";
       }
 
       var val = looseDictionary.get(name);
+
       if (bitlib.common.isNullOrUndefined(val)) {
         return "";
       }
@@ -240,21 +283,32 @@
     };
 
     SessionParameter.prototype.set = function (name, val) {
-      if (name) {
-        looseDictionary.set(name, val);
+      var self = this;
+
+      if (!name || !bitlib.common.isString(name)) {
+        return self;
       }
-      return this;
+
+      looseDictionary.set(name, val);
+
+      return self;
     };
 
     SessionParameter.prototype.remove = function (name) {
-      if (name) {
-        looseDictionary.remove(name);
+      var self = this;
+
+      if (!name || !bitlib.common.isString(name)) {
+        return self;
       }
-      return this;
+
+      looseDictionary.remove(name);
+
+      return self;
     };
 
     SessionParameter.prototype.removeWithout = function (names) {
       names = names || [];
+      names = bitlib.common.isArray(names) ? names : [names];
 
       looseDictionary.removeWithout(names);
 
@@ -393,20 +447,19 @@
     }
 
     LocalParameter.prototype.exists = function (name) {
-      if (!name) {
+      if (!name || !bitlib.common.isString(name)) {
         return false;
       }
-
-      var clone = looseDictionary.clone();
-      return clone.hasOwnProperty(name);
+      return looseDictionary.exists(name);
     };
 
     LocalParameter.prototype.get = function (name) {
-      if (!name) {
+      if (!name || !bitlib.common.isString(name)) {
         return "";
       }
 
       var val = looseDictionary.get(name);
+
       if (bitlib.common.isNullOrUndefined(val)) {
         return "";
       }
@@ -419,21 +472,32 @@
     };
 
     LocalParameter.prototype.set = function (name, val) {
-      if (name) {
-        looseDictionary.set(name, val);
+      var self = this;
+
+      if (!name || !bitlib.common.isString(name)) {
+        return self;
       }
-      return this;
+
+      looseDictionary.set(name, val);
+
+      return self;
     };
 
     LocalParameter.prototype.remove = function (name) {
-      if (name) {
-        looseDictionary.remove(name);
+      var self = this;
+
+      if (!name || !bitlib.common.isString(name)) {
+        return self;
       }
-      return this;
+
+      looseDictionary.remove(name);
+
+      return self;
     };
 
     LocalParameter.prototype.removeWithout = function (names) {
       names = names || [];
+      names = bitlib.common.isArray(names) ? names : [names];
 
       looseDictionary.removeWithout(names);
 
@@ -511,20 +575,19 @@
     }
 
     PageParameter.prototype.exists = function (name) {
-      if (!name) {
+      if (!name || !bitlib.common.isString(name)) {
         return false;
       }
-
-      var clone = looseDictionary.clone();
-      return clone.hasOwnProperty(name);
+      return looseDictionary.exists(name);
     };
 
     PageParameter.prototype.get = function (name) {
-      if (!name) {
+      if (!name || !bitlib.common.isString(name)) {
         return "";
       }
 
       var val = looseDictionary.get(name);
+
       if (bitlib.common.isNullOrUndefined(val)) {
         return "";
       }
@@ -537,17 +600,27 @@
     };
 
     PageParameter.prototype.setSessionQuery = function (name, val) {
-      if (name) {
-        sessionQueryDictionary.set(name, val);
+      var self = this;
+
+      if (!name || !bitlib.common.isString(name)) {
+        return self;
       }
-      return this;
+
+      sessionQueryDictionary.set(name, val);
+
+      return self;
     };
 
     PageParameter.prototype.removeSessionQuery = function (name) {
-      if (name) {
-        sessionQueryDictionary.remove(name);
+      var self = this;
+
+      if (!name || !bitlib.common.isString(name)) {
+        return self;
       }
-      return this;
+
+      sessionQueryDictionary.remove(name);
+
+      return self;
     };
 
     PageParameter.prototype.clearSessionQueries = function () {

@@ -9,7 +9,7 @@
     self.isUsable = function (imgType) {
       imgType = (imgType || "").toLowerCase();
 
-      if (!imgType) {
+      if (!imgType || !bitlib.common.isString(imgType)) {
         return false;
       }
 
@@ -95,7 +95,7 @@
     self.wrapImageType = function (imgType) {
       imgType = (imgType || "").toLowerCase();
 
-      if (!imgType) {
+      if (!imgType || !bitlib.common.isString(imgType)) {
         return "";
       }
 

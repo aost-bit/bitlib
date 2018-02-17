@@ -1,6 +1,18 @@
 ﻿(function (bitlib) {
   "use strict";
 
+  /// datepicker override.
+  $.datepicker._gotoToday = function (id) {
+    // set today and close dialog
+    var today = new Date();
+    var inst = $.datepicker._curInst;
+    inst.selectedDay = inst.currentDay = today.getDate().toString();
+    inst.selectedMonth = inst.currentMonth = today.getMonth();
+    inst.selectedYear = inst.currentYear = today.getFullYear();
+    this._selectDate(id, this._formatDate(inst,
+      inst.currentDay, inst.currentMonth, inst.currentYear));
+  };
+
   /// subclass dialog widget
   $.widget("ui.customDialog", $.ui.dialog, {
     open: function () {
@@ -11,17 +23,20 @@
   function openDialog(message, clickHandler, options) {
     options = options || {};
 
-    var $dialog = $("body").find("#hydr-dialog"),
+    var $dialog = $("body").find("#bit-dialog"),
       createNew = !$dialog.length;
 
     if (createNew) {
-      $dialog = $('<div id="hydr-dialog" title="確認"><span id="hydr-dialog-contents"></span></div>').appendTo("body");
+      $dialog = $('<div id="bit-dialog" title="確認"><span id="bit-dialog-contents"></span></div>').appendTo("body");
     }
 
-    $dialog.removeClass();
+    $dialog.removeClass(function (index, className) {
+      return (className.match(/^(?!ui-).*$/g) || []).join(" ");
+    });
 
     if (options.cssClass) {
       var classArray = options.cssClass.replace(/ /ig, ",").split(",");
+
       $.each(classArray, function (i, cssClass) {
         if (cssClass) {
           $dialog.addClass(cssClass);
@@ -35,7 +50,7 @@
       message = '<div>' + message + '</div>';
     }
 
-    var $contents = $dialog.find("#hydr-dialog-contents");
+    var $contents = $dialog.find("#bit-dialog-contents");
     $contents.html(message);
 
     var buttons = {};
@@ -142,6 +157,7 @@
 
     if (options.cssClass) {
       var classArray = options.cssClass.replace(/ /ig, ",").split(",");
+
       $.each(classArray, function (i, cssClass) {
         if (cssClass) {
           $screenLock.addClass(cssClass);
@@ -151,8 +167,8 @@
 
     $screenLock
       .css({
-        height: $(document).height() + "px",
-        width: $(document).width() + "px"
+        height: ($(document).height() + "px"),
+        width: ($(document).width() + "px")
       });
 
     var $contents = $('<div id="screen-lock-contents"></div>').appendTo($screenLock);
@@ -175,12 +191,12 @@
       spinnerOn("screen-lock-contents", 70, 120, 12, 25, "#fff");
     }
 
-    var windowHalfWidth = $(window).width() / 2.0;
-    var windowHalfHeight = $(window).height() / 2.0;
+    var windowHalfWidth = $(window).width() / 2.0,
+      windowHalfHeight = $(window).height() / 2.0;
 
     // コンテンツ要素を中心に配置する
-    var x = windowHalfWidth - ($contents.width() / 2.0);
-    var y = windowHalfHeight - ($contents.height() / 2.0);
+    var x = windowHalfWidth - ($contents.width() / 2.0),
+      y = windowHalfHeight - ($contents.height() / 2.0);
 
     // ウィンドウ位置をドキュメント座標に
     x += window.pageXOffset || document.documentElement.scrollLeft;
@@ -188,8 +204,8 @@
 
     $contents
       .css({
-        left: x + "px",
-        top: y + "px"
+        left: (x + "px"),
+        top: (y + "px")
       });
   }
 
@@ -212,6 +228,7 @@
 
     if (options.cssClass) {
       var classArray = options.cssClass.replace(/ /ig, ",").split(",");
+
       $.each(classArray, function (i, cssClass) {
         if (cssClass) {
           $fadeElement.addClass(cssClass);
@@ -227,12 +244,12 @@
 
     var $contents = $('<div id="fade-element-contents">' + contentsHtml + '</div>').appendTo($fadeElement);
 
-    var windowHalfWidth = $(window).width() / 2.0;
-    var windowHalfHeight = $(window).height() / 2.0;
+    var windowHalfWidth = $(window).width() / 2.0,
+      windowHalfHeight = $(window).height() / 2.0;
 
     // 要素を中心に配置する
-    var x = windowHalfWidth - ($fadeElement.width() / 2.0);
-    var y = windowHalfHeight - ($fadeElement.height() / 2.0);
+    var x = windowHalfWidth - ($fadeElement.width() / 2.0),
+      y = windowHalfHeight - ($fadeElement.height() / 2.0);
 
     // ウィンドウ位置をドキュメント座標に
     x += window.pageXOffset || document.documentElement.scrollLeft;
@@ -240,8 +257,8 @@
 
     $fadeElement
       .css({
-        left: x + "px",
-        top: y + "px"
+        left: (x + "px"),
+        top: (y + "px")
       });
 
     setTimeout(function () {
@@ -333,6 +350,10 @@
     };
 
     self.onPreventDoubleTapZoom = function () {
+      if (!isValidDoubleTapZoom) {
+        return self;
+      }
+
       disablePreventDoubleTapZoom();
       isValidDoubleTapZoom = false;
 
@@ -340,6 +361,10 @@
     };
 
     self.offPreventDoubleTapZoom = function () {
+      if (isValidDoubleTapZoom) {
+        return self;
+      }
+
       enablePreventDoubleTapZoom();
       isValidDoubleTapZoom = true;
 

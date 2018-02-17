@@ -1149,6 +1149,327 @@
     return DateRange;
   }());
 
+  var TimeRange = (function () {
+    var className = "TimeRange";
+
+    function TimeRange(initObj) {
+      var self = this;
+
+      self.isTimeRangeObj = true;
+
+      var beginData = 0,
+        endData = 0;
+
+      self._getBeginData = function () {
+        return beginData;
+      };
+
+      self._setBeginData = function (newData) {
+        if (bitlib.common.isNumber(newData)) {
+          beginData = newData;
+
+          if (endData < beginData) {
+            endData = beginData;
+          }
+        }
+        return self;
+      };
+
+      self._getEndData = function () {
+        return endData;
+      };
+
+      self._setEndData = function (newData) {
+        if (bitlib.common.isNumber(newData)) {
+          endData = newData;
+
+          if (endData < beginData) {
+            beginData = endData;
+          }
+        }
+        return self;
+      };
+
+      if (initObj) {
+        if (bitlib.common.isNumber(initObj.begin) && bitlib.common.isNumber(initObj.end)) {
+          var begin = initObj.begin,
+            end = initObj.end;
+
+          if (end < begin) {
+            var temp = begin;
+            begin = end;
+            end = temp;
+          }
+
+          self
+            ._setBeginData(begin)
+            ._setEndData(end);
+        }
+      }
+
+      return self;
+    }
+
+    TimeRange.prototype.clone = function () {
+      return new TimeRange({
+        begin: this._getBeginData(),
+        end: this._getEndData()
+      });
+    };
+
+    TimeRange.prototype.getDuration = function () {
+      return this._getEndData() - this._getBeginData();
+    };
+
+    TimeRange.prototype.getBegin = function () {
+      return this._getBeginData();
+    };
+
+    TimeRange.prototype.getEnd = function () {
+      return this._getEndData();
+    };
+
+    TimeRange.prototype.setBegin = function (val) {
+      this._setBeginData(val);
+      return this;
+    };
+
+    TimeRange.prototype.setEnd = function (val) {
+      this._setEndData(val);
+      return this;
+    };
+
+    TimeRange.prototype.shiftForward = function (val) {
+      var self = this;
+
+      val = bitlib.common.toInteger(val);
+      if (isNaN(val)) {
+        return self;
+      }
+
+      var beginData = self._getBeginData(),
+        endData = self._getEndData();
+
+      self
+        ._setBeginData(beginData + val)
+        ._setEndData(endData + val);
+
+      return self;
+    };
+
+    TimeRange.prototype.shiftBackward = function (val) {
+      var self = this;
+
+      val = bitlib.common.toInteger(val);
+      if (isNaN(val)) {
+        return self;
+      }
+
+      var beginData = self._getBeginData(),
+        endData = self._getEndData();
+
+      self
+        ._setBeginData(beginData - val)
+        ._setEndData(endData - val);
+
+      return self;
+    };
+
+    TimeRange.prototype.isOverlapped = function (obj) {
+      var self = this;
+
+      if (!obj || !obj.isTimeRangeObj) {
+        return false;
+      }
+
+      var beginData = self._getBeginData(),
+        endData = self._getEndData();
+
+      return (obj.getBegin() <= endData) && (beginData <= obj.getEnd());
+    };
+
+    TimeRange.prototype.contains = function (val) {
+      var self = this;
+
+      if (!bitlib.common.isNumber(val)) {
+        return false;
+      }
+
+      var beginData = self._getBeginData(),
+        endData = self._getEndData();
+
+      return (val <= endData) && (beginData <= val);
+    };
+
+    TimeRange.prototype.isEqual = function (obj) {
+      var self = this;
+
+      if (!obj || !obj.isTimeRangeObj) {
+        return false;
+      }
+
+      var beginData = self._getBeginData(),
+        endData = self._getEndData();
+
+      return (obj.getBegin() === beginData) && (obj.getEnd() === endData);
+    };
+
+    TimeRange.prototype.getIntersectRange = function (obj) {
+      var self = this;
+
+      if (!self.isOverlapped(obj)) {
+        return self.clone();
+      }
+
+      var beginData = self._getBeginData(),
+        endData = self._getEndData();
+
+      var objBeginData = obj._getBeginData(),
+        objEndData = obj._getEndData();
+
+      return new TimeRange({
+        begin: Math.max(beginData, objBeginData),
+        end: Math.min(endData, objEndData)
+      });
+    };
+
+    TimeRange.prototype.getUnionRange = function (obj) {
+      var self = this;
+
+      if (!self.isOverlapped(obj)) {
+        return self.clone();
+      }
+
+      var beginData = self._getBeginData(),
+        endData = self._getEndData();
+
+      var objBeginData = obj._getBeginData(),
+        objEndData = obj._getEndData();
+
+      return new TimeRange({
+        begin: Math.min(beginData, objBeginData),
+        end: Math.max(endData, objEndData)
+      });
+    };
+
+    TimeRange.getClassName = function () {
+      return className;
+    };
+
+    return TimeRange;
+  }());
+
+  var Age = (function () {
+    var className = "Age";
+
+    function Age(initVal) {
+      var self = this;
+
+      self.isAgeObj = true;
+
+      var data = 0; // days
+
+      self._getData = function () {
+        return data;
+      };
+
+      self._setData = function (newData) {
+        newData = bitlib.common.toInteger(newData);
+
+        if (!isNaN(newData)) {
+          data = newData;
+        }
+
+        return self;
+      };
+
+      if (initVal) {
+        self._setData(initVal);
+      }
+
+      return self;
+    }
+
+    Age.prototype.clone = function () {
+      return new Age(this._getData());
+    };
+
+    Age.prototype.getData = function () {
+      return this._getData();
+    };
+
+    Age.prototype.getYears = function () {
+      return Math.floor(this._getData() / 365);
+    };
+
+    Age.prototype.setYears = function (val) {
+      var self = this;
+
+      val = bitlib.common.toInteger(val);
+      if (isNaN(val)) {
+        return self;
+      }
+
+      var rem = self._getData() % 365;
+      var data = (val * 365) + rem;
+
+      self._setData(data);
+
+      return self;
+    };
+
+    Age.prototype.getMonths = function () {
+      var rem = this._getData() % 365;
+      return Math.floor(rem / 30);
+    };
+
+    Age.prototype.setMonths = function (val) {
+      var self = this;
+
+      val = bitlib.common.toInteger(val);
+      if (isNaN(val)) {
+        return self;
+      }
+
+      var quot = Math.floor(self._getData() / 365),
+        rem = self._getData() % 30;
+
+      var data = (quot * 365) + (val * 30) + rem;
+
+      self._setData(data);
+
+      return self;
+    };
+
+    Age.prototype.getDays = function () {
+      var rem = (this._getData() % 365) % 30;
+      return rem;
+    };
+
+    Age.prototype.setDays = function (val) {
+      var self = this;
+
+      val = bitlib.common.toInteger(val);
+      if (isNaN(val)) {
+        return self;
+      }
+
+      var quot = Math.floor(self._getData() / 30);
+
+      var data = (quot * 30) + val;
+
+      self._setData(data);
+
+      return self;
+    };
+
+    Age.getClassName = function () {
+      return className;
+    };
+
+    return Age;
+  }());
+
   bitlib.datetime = (function () {
     var self = {};
 
@@ -1209,6 +1530,14 @@
 
     self.createDateRangeObj = function (initObj) {
       return new DateRange(initObj);
+    };
+
+    self.createTimeRangeObj = function (initObj) {
+      return new TimeRange(initObj);
+    };
+
+    self.createAgeObj = function (initVal) {
+      return new Age(initVal);
     };
 
     return self;

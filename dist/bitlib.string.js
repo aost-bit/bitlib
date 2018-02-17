@@ -6,10 +6,24 @@
 
     self.type = "bitlib.string";
 
+    self.toValue = function (val) {
+      val = bitlib.ko.unwrap(val);
+
+      if (bitlib.common.isNullOrUndefined(val)) {
+        return "";
+      }
+
+      if (!bitlib.common.isString(val)) {
+        return bitlib.json.stringify(val);
+      }
+
+      return val;
+    };
+
     self.contains = function (str, val) {
       str = str || "";
 
-      if (!bitlib.common.isString(str)) {
+      if (!bitlib.common.isString(str) || bitlib.common.isNullOrUndefined(val)) {
         return false;
       }
 
@@ -177,6 +191,26 @@
       return !!str.match(/^[ｧ-ﾝ~.ﾞﾟ-]+$/);
     };
 
+    self.toEnKana = function (str) {
+      if (!str || !bitlib.common.isString(str)) {
+        return str;
+      }
+
+      var result = "";
+
+      for (var i = 0, len = str.length; i < len; i++) {
+        var chr = str.charCodeAt(i);
+
+        if (self.isHiragana(chr)) {
+          result += String.fromCharCode(chr + 0x60); // 半角カタカナに変換
+        } else {
+          result += str.charAt(i);
+        }
+      }
+
+      return result;
+    };
+
     var MONOBYTE_KANA_CHARS = [
       "ｶﾞ", "ｷﾞ", "ｸﾞ", "ｹﾞ", "ｺﾞ",
       "ｻﾞ", "ｼﾞ", "ｽﾞ", "ｾﾞ", "ｿﾞ",
@@ -231,11 +265,73 @@
       return str;
     };
 
+    self.snakeToCamel = function (str) {
+      if (!str || !bitlib.common.isString(str)) {
+        return "";
+      }
+
+      str = str
+        .replace(/^[\-_ ]/g, "")
+        .replace(/[\-_ ]./g, function (match) {
+          return match.charAt(1).toUpperCase();
+        });
+
+      return str.replace(/^[a-z]/g, function (match) {
+        return match.toUpperCase();
+      });
+    };
+
+    self.camelToSnake = function (str) {
+      if (!str || !bitlib.common.isString(str)) {
+        return "";
+      }
+
+      return str
+        .replace(/^[A-Z]+$/, function (match) {
+          return match.toLowerCase();
+        })
+        .replace(/^[A-Z]+/, function (match) {
+          if (match.length > 1) {
+            return match.replace(/[A-Z]$/, function (m) {
+              return ("-" + m.toLowerCase());
+            }).toLowerCase();
+          } else {
+            return match.toLowerCase();
+          }
+        })
+        .replace(/[A-Z]+$/g, function (match) {
+          return ("-" + match.toLowerCase());
+        })
+        .replace(/[A-Z]/g, function (match) {
+          return ("-" + match.toLowerCase());
+        });
+    };
+
     self.isHtmlString = function (str) {
       if (!str || !bitlib.common.isString(str)) {
         return false;
       }
       return !!str.match(/^<[a-z]+>.*<\/[a-z]+>$/ig);
+    };
+
+    self.concatValues = function (arr, delimiter) {
+      if (!delimiter || !bitlib.common.isString(delimiter)) {
+        delimiter = "";
+      }
+
+      arr = arr || [];
+      arr = bitlib.common.isArray(arr) ? arr : [arr];
+
+      var results = [];
+      for (var i = 0, len = arr.length; i < len; i++) {
+        var str = self.trim(arr[i]);
+
+        if (!!str) {
+          results.push(str);
+        }
+      }
+
+      return results.join(delimiter);
     };
 
     self.toText = function () {
@@ -270,7 +366,7 @@
       return val;
     };
 
-    self.toNumberText = function (val, defaultVal) {
+    self.toNumText = function (val, defaultVal) {
       val = val || "";
 
       if (bitlib.common.isNullOrUndefined(defaultVal)) {
@@ -290,7 +386,7 @@
       return num.toString();
     };
 
-    self.toArrayText = function () {
+    self.toArrText = function () {
       var args = [];
       args.push.apply(args, arguments);
 
@@ -342,7 +438,7 @@
       return arrText || defaultVal;
     };
 
-    self.toPropertyText = function () {
+    self.toPropText = function () {
       var args = [];
       args.push.apply(args, arguments);
 

@@ -7,25 +7,24 @@
     self.type = "bitlib.array";
 
     self.isEmpty = function (arr) {
-      if (!bitlib.common.isArray(arr) && !bitlib.common.isObservableArray(arr)) {
+      arr = bitlib.common.isObservable(arr) ? arr() : arr;
+
+      if (!bitlib.common.isArray(arr)) {
         return false;
       }
-
-      arr = bitlib.common.isObservable(arr) ? arr() : arr;
 
       return (arr.length === 0);
     };
 
     self.contains = function (arr, elems) {
-      arr = arr || [];
+      arr = bitlib.common.isObservable(arr) ? arr() : arr;
 
-      if (!bitlib.common.isArray(arr) && !bitlib.common.isObservableArray(arr)) {
+      if (!bitlib.common.isArray(arr)) {
         return false;
       }
 
-      arr = bitlib.common.isObservable(arr) ? arr() : arr;
-
       elems = bitlib.common.isArray(elems) ? elems : [elems];
+
       if (elems.length === 0) {
         return false;
       }
@@ -37,6 +36,23 @@
       }
 
       return false;
+    };
+
+    self.removeUndefined = function (arr) {
+      arr = arr || [];
+
+      if (!bitlib.common.isArray(arr) || arr.length === 0) {
+        return [];
+      }
+
+      var results = [];
+      for (var i = 0, len = arr.length; i < len; i++) {
+        if (!bitlib.common.isUndefined(arr[i])) {
+          results.push(arr[i]);
+        }
+      }
+
+      return results;
     };
 
     self.removeUndefined = function (arr) {
@@ -103,7 +119,7 @@
       arr = bitlib.common.isArray(arr) ? arr : [arr];
 
       if (!bitlib.common.isFunction(validator)) {
-        validator = function (i, elem) {
+        validator = function (index, elem) {
           return !!elem;
         };
       }
@@ -136,10 +152,15 @@
         len = arr.length;
 
       var eachTimeout = function () {
-        var rt = callback(i, arr[i]);
+        try {
+          var rt = callback(i, arr[i]);
 
-        if (rt === false || i === len - 1) {
-          defer.resolve();
+          if (rt === false || i === len - 1) {
+            defer.resolve();
+            return this;
+          }
+        } catch (err) {
+          defer.reject(err);
           return this;
         }
 

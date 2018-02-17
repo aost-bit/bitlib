@@ -1,13 +1,22 @@
 ﻿(function (bitlib) {
   "use strict";
 
+  function formatNumber(str) {
+    if (!bitlib.common.isString(str)) {
+      return "";
+    }
+
+    return bitlib.string
+      .replaceToEncode(str)
+      .replace(/[A-za-z!"#$%&'()=<>,?_\[\]{}@^~\\ぁ-んァ-ン\s\t]/g, "");
+  }
+
   var Numeric = (function () {
     var className = "Numeric";
 
     function parseToNumber(val) {
       if (bitlib.common.isString(val)) {
-        val = bitlib.string.replaceToEncode(val)
-          .replace(/[A-za-z!"#$%&'()=<>,?_\[\]{}@^~\\ぁ-んァ-ン]/g, "");
+        val = formatNumber(val);
       }
 
       val = bitlib.common.toNumber(val);
@@ -255,6 +264,10 @@
     var self = {};
 
     self.type = "bitlib.numeric";
+
+    self.formatNumber = function (str) {
+      return formatNumber(str);
+    };
 
     self.createNumericObj = function (initVal) {
       return new Numeric(initVal);

@@ -7,14 +7,17 @@
     self.type = "bitlib.object";
 
     self.isEmpty = function (obj) {
+      obj = bitlib.common.isObservable(obj) ? obj() : obj;
+
       if (!bitlib.common.isObject(obj)) {
-        return true;
+        return false;
       }
+
       return $.isEmptyObject(obj);
     };
 
     self.getPropertyLength = function (obj) {
-      obj = obj || {};
+      obj = bitlib.common.isObservable(obj) ? obj() : obj;
 
       if (!bitlib.common.isObject(obj)) {
         return 0;
@@ -33,7 +36,7 @@
     self.getPropertyByPath = function (obj, path) {
       obj = obj || {}, path = path || "";
 
-      if (!(bitlib.common.isObject(obj) || bitlib.common.isArray(obj)) || !bitlib.common.isString(path)) {
+      if (!bitlib.common.isObject(obj) || !bitlib.common.isString(path)) {
         return undefined;
       }
 
@@ -52,13 +55,13 @@
         }
 
         for (var key in prop) {
-          if (name === key.toLowerCase()) {
+          if (prop.hasOwnProperty(key) && name === key.toLowerCase()) {
             val = prop[key];
             break;
           }
         }
 
-        if (!(bitlib.common.isObject(val) || bitlib.common.isArray(val))) {
+        if (!bitlib.common.isObject(val)) {
           return val;
         }
 
@@ -180,10 +183,15 @@
       }
 
       var eachTimeout = function () {
-        var rt = callback(keys[i], obj[keys[i]]);
+        try {
+          var rt = callback(keys[i], obj[keys[i]]);
 
-        if (rt === false || i === len - 1) {
-          defer.resolve();
+          if (rt === false || i === len - 1) {
+            defer.resolve();
+            return this;
+          }
+        } catch (err) {
+          defer.reject(err);
           return this;
         }
 
@@ -194,6 +202,24 @@
       setTimeout(eachTimeout, 0);
 
       return defer.promise();
+    };
+
+    self.concatSequentialProperties = function (source, propNames) {
+      if (!bitlib.common.isObject(source) || !bitlib.common.isArray(propNames) || propNames.length === 0) {
+        return {};
+      }
+
+      var results = [];
+
+      for (var i = 0, len = propNames.length; i < len; i++) {
+        var name = propNames[i];
+
+        if (bitlib.common.isString(name)) {
+          results.push(source[name]);
+        }
+      }
+
+      return results;
     };
 
     return self;

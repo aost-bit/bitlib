@@ -154,8 +154,36 @@
       return (typeof window.sessionStorage !== "undefined");
     };
 
+    self.clearSessionStorage = function () {
+      if (!self.isSupportSessionStorage()) {
+        return self;
+      }
+
+      try {
+        window.sessionStorage.clear();
+      } catch (err) {
+        bitlib.logger.error(err);
+      }
+
+      return self;
+    };
+
     self.isSupportLocalStorage = function () {
       return (typeof window.localStorage !== "undefined");
+    };
+
+    self.clearLocalStorage = function () {
+      if (!self.isSupportLocalStorage()) {
+        return self;
+      }
+
+      try {
+        window.localStorage.clear();
+      } catch (err) {
+        bitlib.logger.error(err);
+      }
+
+      return self;
     };
 
     self.isSupportFileAPI = function () {
@@ -163,14 +191,18 @@
     };
 
     self.getKeyCode = function (keyName) {
+      if (bitlib.common.isNumber(keyName)) {
+        return keyName;
+      }
+
       keyName = (keyName || "").toLowerCase();
 
-      if (!keyName) {
+      if (!keyName || !bitlib.common.isString(keyName)) {
         return -1;
       }
 
       for (var name in KEY_CODE) {
-        if (name === keyName) {
+        if (KEY_CODE.hasOwnProperty(name) && name.toLowerCase() === keyName.toLowerCase()) {
           return KEY_CODE[name];
         }
       }
