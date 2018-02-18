@@ -126,7 +126,7 @@
     };
 
     self.toBoolean = function (val) {
-      if (self.isString(val)) {
+      if (bitlib.common.isString(val)) {
         val = $.trim(val || "false").toLowerCase();
 
         return self.contains(val, [
