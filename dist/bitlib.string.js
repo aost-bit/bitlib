@@ -366,14 +366,16 @@
       return val;
     };
 
-    self.toNumText = function (val, defaultVal) {
-      val = val || "";
+    self.toNumText = function (str, defaultVal) {
+      if (!bitlib.common.isString(str) || !bitlib.common.isNumber(str)) {
+        str = "";
+      }
 
       if (bitlib.common.isNullOrUndefined(defaultVal)) {
         defaultVal = "---";
       }
 
-      var val = self.toText(val, defaultVal);
+      var val = self.toText(str, defaultVal);
       if (!val || val === defaultVal) {
         return defaultVal;
       }

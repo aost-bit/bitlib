@@ -110,6 +110,27 @@
       return self;
     };
 
+    self.revEach = function (arr, callback) {
+      if (!arr || !bitlib.common.isFunction(callback)) {
+        return self;
+      }
+
+      arr = bitlib.common.isObservable(arr) ? arr() : arr;
+      arr = bitlib.common.isArray(arr) ? arr : [arr];
+
+      try {
+        for (var i = arr.length - 1; - 1 < i; i--) {
+          if (callback(i, arr[i]) === false) {
+            break;
+          }
+        }
+      } catch (err) {
+        bitlib.logger.error(err);
+      }
+
+      return self;
+    };
+
     self.any = function (arr, validator) {
       if (!arr) {
         return false;
@@ -126,6 +147,33 @@
 
       try {
         for (var i = 0, len = arr.length; i < len; i++) {
+          if (!!validator(i, arr[i])) {
+            return true;
+          }
+        }
+      } catch (err) {
+        bitlib.logger.error(err);
+      }
+
+      return false;
+    };
+
+    self.revAny = function (arr, validator) {
+      if (!arr) {
+        return false;
+      }
+
+      arr = bitlib.common.isObservable(arr) ? arr() : arr;
+      arr = bitlib.common.isArray(arr) ? arr : [arr];
+
+      if (!bitlib.common.isFunction(validator)) {
+        validator = function (index, elem) {
+          return !!elem;
+        };
+      }
+
+      try {
+        for (var i = arr.length - 1; - 1 < i; i--) {
           if (!!validator(i, arr[i])) {
             return true;
           }
@@ -165,6 +213,41 @@
         }
 
         i++;
+        setTimeout(eachTimeout, interval);
+      };
+
+      setTimeout(eachTimeout, 0);
+
+      return defer.promise();
+    };
+
+    self.revEachTimeout = function (arr, callback, interval) {
+      var defer = $.Deferred();
+
+      if (!bitlib.common.isArray(arr) || arr.length === 0 || !bitlib.common.isFunction(callback)) {
+        return defer.resolve().promise();
+      }
+
+      if (!bitlib.common.isNumber(interval) || interval < 10) {
+        interval = 10;
+      }
+
+      var i = arr.length - 1;
+
+      var eachTimeout = function () {
+        try {
+          var rt = callback(i, arr[i]);
+
+          if (rt === false || i === 0) {
+            defer.resolve();
+            return this;
+          }
+        } catch (err) {
+          defer.reject(err);
+          return this;
+        }
+
+        i--;
         setTimeout(eachTimeout, interval);
       };
 
