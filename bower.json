@@ -1,9 +1,9 @@
 {
   "name": "bitlib",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "homepage": "https://github.com/aost-bit/bitlib",
   "authors": [
-    "AOST <aost.bit@gmail.com>"
+    "Satoru AOYAMA <aost.bit@gmail.com>"
   ],
   "description": "",
   "main": "dist/bitlib.js",

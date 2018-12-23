@@ -20,7 +20,7 @@
       var repository = [];
 
       self._getAll = function () {
-        return bitlib.common.copyDeep(repository);
+        return bitlib.common.copy(repository);
       };
 
       self._add = function (type, message) {

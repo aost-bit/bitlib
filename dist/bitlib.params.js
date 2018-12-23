@@ -27,7 +27,7 @@
           return false;
         }
 
-        var clone = bitlib.common.copyDeep(params);
+        var clone = bitlib.common.copy(params);
 
         for (var k in clone) {
           if (clone.hasOwnProperty(k) && k.toLowerCase() === name) {
@@ -45,7 +45,7 @@
           return undefined;
         }
 
-        var clone = bitlib.common.copyDeep(params);
+        var clone = bitlib.common.copy(params);
 
         for (var k in clone) {
           if (clone.hasOwnProperty(k) && k.toLowerCase() === name) {
@@ -57,7 +57,7 @@
       };
 
       self._getAll = function () {
-        return bitlib.common.copyDeep(params);
+        return bitlib.common.copy(params);
       };
 
       self._set = function (name, val) {

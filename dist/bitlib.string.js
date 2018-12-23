@@ -367,7 +367,7 @@
     };
 
     self.toNumText = function (str, defaultVal) {
-      if (!bitlib.common.isString(str) || !bitlib.common.isNumber(str)) {
+      if (!bitlib.common.isString(str) && !bitlib.common.isNumber(str)) {
         str = "";
       }
 

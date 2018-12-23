@@ -44,7 +44,7 @@
         .replace(/\./g, "/")
         .split("/");
 
-      var prop = bitlib.common.copyDeep(obj);
+      var prop = bitlib.common.copy(obj);
 
       for (var i = 0, len = names.length; i < len; i++) {
         var name = names[i].toLowerCase(),

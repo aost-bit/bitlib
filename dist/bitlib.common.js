@@ -205,13 +205,31 @@
       return result;
     };
 
-    self.copyDeep = function (original) {
+    self.copy = function (original) {
       if (self.isObject(original)) {
         return $.extend({}, {}, original);
       }
       if (self.isArray(original)) {
         return original.slice(0, original.length);
       }
+      return original;
+    };
+
+    self.copyDeep = function (original) {
+      if (self.isObject(original)) {
+        return $.extend(true, {}, original);
+      }
+
+      if (self.isArray(original)) {
+        var arr = [];
+
+        for (var i = 0, len = original.length; i < len; i++) {
+          arr.push(self.copyDeep(original[i]));
+        }
+
+        return arr;
+      }
+
       return original;
     };
 
