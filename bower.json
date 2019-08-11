@@ -1,26 +1,26 @@
 {
-  "name": "bitlib",
-  "version": "2.0.0",
-  "homepage": "https://github.com/aost-bit/bitlib",
-  "authors": [
-    "Satoru AOYAMA <aost.bit@gmail.com>"
-  ],
-  "description": "",
-  "main": "dist/bitlib.js",
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "knockout": "latest",
-    "moment": "latest",
-    "inherits": "latest",
-    "jquery-ui": "latest",
-    "raphael": "latest",
-    "font-awesome": "latest"
-  }
+    "name": "bitlib",
+    "version": "2.1.0",
+    "homepage": "https://github.com/aost-bit/bitlib",
+    "authors": [
+        "Satoru AOYAMA <aost.bit@gmail.com>"
+    ],
+    "description": "",
+    "main": "dist/bitlib.js",
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "knockout": "latest",
+        "moment": "latest",
+        "inherits": "latest",
+        "jquery-ui": "latest",
+        "raphael": "latest",
+        "font-awesome": "latest"
+    }
 }
