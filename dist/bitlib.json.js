@@ -1,12 +1,12 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.json = (function() {
+    bitlib.json = (function () {
         var self = {};
 
         self.type = "bitlib.json";
 
-        self.stringify = function(obj) {
+        self.stringify = function (obj) {
             if (bitlib.common.isNullOrUndefined(obj)) {
                 return "";
             }
@@ -21,7 +21,7 @@
         };
 
         // JSON 文字列を pretty-printed した形の文字列で返却します.
-        self.format = function(val) {
+        self.format = function (val) {
             if (!val) {
                 return "";
             }
@@ -36,7 +36,7 @@
             return "";
         };
 
-        self.parse = function(val) {
+        self.parse = function (val) {
             if (!val) {
                 return null;
             }

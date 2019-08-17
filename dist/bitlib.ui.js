@@ -1,8 +1,8 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
     /// datepicker override.
-    $.datepicker._gotoToday = function(id) {
+    $.datepicker._gotoToday = function (id) {
         // set today and close dialog
         var today = new Date();
         var inst = $.datepicker._curInst;
@@ -15,7 +15,7 @@
 
     /// subclass dialog widget
     $.widget("ui.customDialog", $.ui.dialog, {
-        open: function() {
+        open: function () {
             $.ui.dialog.prototype.open.apply(this, arguments);
         }
     });
@@ -30,14 +30,14 @@
             $dialog = $('<div id="bit-dialog" title="確認"><span id="bit-dialog-contents"></span></div>').appendTo("body");
         }
 
-        $dialog.removeClass(function(index, className) {
+        $dialog.removeClass(function (index, className) {
             return (className.match(/^(?!ui-).*$/g) || []).join(" ");
         });
 
         if (options.cssClass) {
             var classArray = options.cssClass.replace(/ /ig, ",").split(",");
 
-            $.each(classArray, function(i, cssClass) {
+            $.each(classArray, function (i, cssClass) {
                 if (cssClass) {
                     $dialog.addClass(cssClass);
                 }
@@ -54,8 +54,8 @@
         $contents.html(message);
 
         var buttons = {};
-        $.each(clickHandler, function(name, callback) {
-            buttons[name] = function() {
+        $.each(clickHandler, function (name, callback) {
+            buttons[name] = function () {
                 callback();
                 $dialog.customDialog("close");
             };
@@ -94,7 +94,11 @@
             opacity = [],
             beta = 2 * Math.PI / sectorsCount,
 
-            pathParams = { stroke: color, "stroke-width": width, "stroke-linecap": "round" };
+            pathParams = {
+                stroke: color,
+                "stroke-width": width,
+                "stroke-linecap": "round"
+            };
 
         Raphael.getColor.reset();
 
@@ -128,7 +132,7 @@
             tick = setTimeout(ticker, 1000 / sectorsCount);
         })();
 
-        spinnerRemover = function() {
+        spinnerRemover = function () {
             clearTimeout(tick);
             r.remove();
         };
@@ -158,7 +162,7 @@
         if (options.cssClass) {
             var classArray = options.cssClass.replace(/ /ig, ",").split(",");
 
-            $.each(classArray, function(i, cssClass) {
+            $.each(classArray, function (i, cssClass) {
                 if (cssClass) {
                     $screenLock.addClass(cssClass);
                 }
@@ -229,7 +233,7 @@
         if (options.cssClass) {
             var classArray = options.cssClass.replace(/ /ig, ",").split(",");
 
-            $.each(classArray, function(i, cssClass) {
+            $.each(classArray, function (i, cssClass) {
                 if (cssClass) {
                     $fadeElement.addClass(cssClass);
                 }
@@ -261,9 +265,9 @@
                 top: (y + "px")
             });
 
-        setTimeout(function() {
+        setTimeout(function () {
             $fadeElement
-                .fadeOut(options.delay || 500, function() {
+                .fadeOut(options.delay || 500, function () {
                     $fadeElement.remove();
                 });
         }, options.stop || 2500);
@@ -275,7 +279,7 @@
     function disablePreventDoubleTapZoom() {
         if (bitlib.browser.ua.isTablet) {
             $(document)
-                .on("touchstart.doubletapzoom", function(event) {
+                .on("touchstart.doubletapzoom", function (event) {
                     var timeStamp = event.timeStamp,
                         lastTapped = $(this).data("lastTouch") || timeStamp;
 
@@ -303,15 +307,15 @@
         }
     }
 
-    bitlib.ui = (function() {
+    bitlib.ui = (function () {
         var self = {};
 
         self.type = "bitlib.ui";
 
-        self.openDialog = function(message, clickHandler, options) {
+        self.openDialog = function (message, clickHandler, options) {
             message = message || "", options = options || {};
             clickHandler = clickHandler || {
-                "OK": function() {}
+                "OK": function () {}
             };
 
             openDialog(message, clickHandler, options);
@@ -319,7 +323,7 @@
             return self;
         };
 
-        self.lockScreen = function(contentsHtml, options) {
+        self.lockScreen = function (contentsHtml, options) {
             contentsHtml = contentsHtml || "", options = options || {};
 
             lockScreen(contentsHtml, options);
@@ -327,13 +331,13 @@
             return self;
         };
 
-        self.unlockScreen = function() {
+        self.unlockScreen = function () {
             unlockScreen();
 
             return self;
         };
 
-        self.fadeOver = function(contentsHtml, options) {
+        self.fadeOver = function (contentsHtml, options) {
             contentsHtml = contentsHtml || "", options = options || {};
 
             if (contentsHtml) {
@@ -345,11 +349,11 @@
 
         var isValidDoubleTapZoom = true;
 
-        self.isValidDoubleTapZoom = function() {
+        self.isValidDoubleTapZoom = function () {
             return isValidDoubleTapZoom;
         };
 
-        self.onPreventDoubleTapZoom = function() {
+        self.onPreventDoubleTapZoom = function () {
             if (!isValidDoubleTapZoom) {
                 return self;
             }
@@ -360,7 +364,7 @@
             return self;
         };
 
-        self.offPreventDoubleTapZoom = function() {
+        self.offPreventDoubleTapZoom = function () {
             if (isValidDoubleTapZoom) {
                 return self;
             }

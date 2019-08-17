@@ -1,4 +1,4 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
     function formatNumber(str) {
@@ -11,7 +11,7 @@
             .replace(/[A-za-z!"#$%&'()=<>,?_\[\]{}@^~\\ぁ-んァ-ン\s\t]/g, "");
     }
 
-    var Numeric = (function() {
+    var Numeric = (function () {
         var className = "Numeric";
 
         function parseToNumber(val) {
@@ -31,11 +31,11 @@
 
             var data = 0; // number
 
-            self._getData = function() {
+            self._getData = function () {
                 return data;
             };
 
-            self._setData = function(newData) {
+            self._setData = function (newData) {
                 newData = bitlib.common.toNumber(newData);
 
                 if (!isNaN(newData)) {
@@ -48,11 +48,11 @@
             var limitMax = Number.POSITIVE_INFINITY,
                 limitMin = Number.NEGATIVE_INFINITY;
 
-            self._getLimitMax = function() {
+            self._getLimitMax = function () {
                 return limitMax;
             };
 
-            self._setLimitMax = function(newVal) {
+            self._setLimitMax = function (newVal) {
                 newVal = bitlib.common.toNumber(newVal);
 
                 if (!isNaN(newVal)) {
@@ -66,11 +66,11 @@
                 return self;
             };
 
-            self._getLimitMin = function() {
+            self._getLimitMin = function () {
                 return limitMin;
             };
 
-            self._setLimitMin = function(newVal) {
+            self._setLimitMin = function (newVal) {
                 newVal = bitlib.common.toNumber(newVal);
 
                 if (!isNaN(newVal)) {
@@ -91,15 +91,15 @@
             return self;
         }
 
-        Numeric.prototype.clone = function() {
+        Numeric.prototype.clone = function () {
             return new Numeric(this._getData());
         };
 
-        Numeric.prototype.getNumber = function() {
+        Numeric.prototype.getNumber = function () {
             return this._getData();
         };
 
-        Numeric.prototype.setNumber = function(val) {
+        Numeric.prototype.setNumber = function (val) {
             var self = this;
 
             val = parseToNumber(val);
@@ -120,7 +120,7 @@
             return self;
         };
 
-        Numeric.prototype.trySetNumber = function(val) {
+        Numeric.prototype.trySetNumber = function (val) {
             var self = this;
 
             val = parseToNumber(val);
@@ -139,7 +139,7 @@
             return true;
         };
 
-        Numeric.prototype.addNumber = function(val) {
+        Numeric.prototype.addNumber = function (val) {
             var self = this;
 
             val = parseToNumber(val);
@@ -166,7 +166,7 @@
             return self;
         };
 
-        Numeric.prototype.tryAddNumber = function(val) {
+        Numeric.prototype.tryAddNumber = function (val) {
             var self = this;
 
             val = parseToNumber(val);
@@ -191,7 +191,7 @@
             return true;
         };
 
-        Numeric.prototype.minusNumber = function(val) {
+        Numeric.prototype.minusNumber = function (val) {
             var self = this;
 
             val = parseToNumber(val);
@@ -218,7 +218,7 @@
             return self;
         };
 
-        Numeric.prototype.tryMinusNumber = function(val) {
+        Numeric.prototype.tryMinusNumber = function (val) {
             var self = this;
 
             val = parseToNumber(val);
@@ -243,33 +243,33 @@
             return true;
         };
 
-        Numeric.prototype.setLimitMax = function(val) {
+        Numeric.prototype.setLimitMax = function (val) {
             this._setLimitMax(val);
             return this;
         };
 
-        Numeric.prototype.setLimitMin = function(val) {
+        Numeric.prototype.setLimitMin = function (val) {
             this._setLimitMin(val);
             return this;
         };
 
-        Numeric.getClassName = function() {
+        Numeric.getClassName = function () {
             return className;
         };
 
         return Numeric;
     }());
 
-    bitlib.numeric = (function() {
+    bitlib.numeric = (function () {
         var self = {};
 
         self.type = "bitlib.numeric";
 
-        self.formatNumber = function(str) {
+        self.formatNumber = function (str) {
             return formatNumber(str);
         };
 
-        self.createNumericObj = function(initVal) {
+        self.createNumericObj = function (initVal) {
             return new Numeric(initVal);
         };
 

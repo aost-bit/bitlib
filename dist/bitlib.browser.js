@@ -1,7 +1,7 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    var UA = (function() {
+    var UA = (function () {
         var ua = {};
 
         ua.name = window.navigator.userAgent.toLowerCase();
@@ -143,18 +143,18 @@
         "_": 226
     };
 
-    bitlib.browser = (function() {
+    bitlib.browser = (function () {
         var self = {};
 
         self.type = "bitlib.browser";
 
         self.ua = UA;
 
-        self.isSupportSessionStorage = function() {
+        self.isSupportSessionStorage = function () {
             return (typeof window.sessionStorage !== "undefined");
         };
 
-        self.clearSessionStorage = function() {
+        self.clearSessionStorage = function () {
             if (!self.isSupportSessionStorage()) {
                 return self;
             }
@@ -168,11 +168,11 @@
             return self;
         };
 
-        self.isSupportLocalStorage = function() {
+        self.isSupportLocalStorage = function () {
             return (typeof window.localStorage !== "undefined");
         };
 
-        self.clearLocalStorage = function() {
+        self.clearLocalStorage = function () {
             if (!self.isSupportLocalStorage()) {
                 return self;
             }
@@ -186,11 +186,11 @@
             return self;
         };
 
-        self.isSupportFileAPI = function() {
+        self.isSupportFileAPI = function () {
             return (typeof window.File !== "undefined");
         };
 
-        self.getKeyCode = function(keyName) {
+        self.getKeyCode = function (keyName) {
             if (bitlib.common.isNumber(keyName)) {
                 return keyName;
             }
@@ -210,12 +210,12 @@
             return -1;
         };
 
-        self.isOnline = function() {
+        self.isOnline = function () {
             //[TODO] ネットワーク状態の取得
             return true; // window.navigator.onLine
         };
 
-        self.close = function() {
+        self.close = function () {
             if (!self.ua.isChrome) {
                 (window.open("", "_self").opener = window).close();
             }

@@ -1,12 +1,12 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.array = (function() {
+    bitlib.array = (function () {
         var self = {};
 
         self.type = "bitlib.array";
 
-        self.isEmpty = function(arr) {
+        self.isEmpty = function (arr) {
             arr = bitlib.common.isObservable(arr) ? arr() : arr;
 
             if (!bitlib.common.isArray(arr)) {
@@ -16,7 +16,7 @@
             return (arr.length === 0);
         };
 
-        self.contains = function(arr, elems) {
+        self.contains = function (arr, elems) {
             arr = bitlib.common.isObservable(arr) ? arr() : arr;
 
             if (!bitlib.common.isArray(arr)) {
@@ -38,7 +38,7 @@
             return false;
         };
 
-        self.removeUndefined = function(arr) {
+        self.removeUndefined = function (arr) {
             arr = arr || [];
 
             if (!bitlib.common.isArray(arr) || arr.length === 0) {
@@ -55,7 +55,7 @@
             return results;
         };
 
-        self.removeUndefined = function(arr) {
+        self.removeUndefined = function (arr) {
             arr = arr || [];
 
             if (!bitlib.common.isArray(arr) || arr.length === 0) {
@@ -72,7 +72,7 @@
             return results;
         };
 
-        self.removeNullOrUndefined = function(arr) {
+        self.removeNullOrUndefined = function (arr) {
             arr = arr || [];
 
             if (!bitlib.common.isArray(arr) || arr.length === 0) {
@@ -89,7 +89,7 @@
             return results;
         };
 
-        self.each = function(arr, callback) {
+        self.each = function (arr, callback) {
             if (!arr || !bitlib.common.isFunction(callback)) {
                 return self;
             }
@@ -110,7 +110,7 @@
             return self;
         };
 
-        self.revEach = function(arr, callback) {
+        self.revEach = function (arr, callback) {
             if (!arr || !bitlib.common.isFunction(callback)) {
                 return self;
             }
@@ -131,7 +131,7 @@
             return self;
         };
 
-        self.any = function(arr, validator) {
+        self.any = function (arr, validator) {
             if (!arr) {
                 return false;
             }
@@ -140,7 +140,7 @@
             arr = bitlib.common.isArray(arr) ? arr : [arr];
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(index, elem) {
+                validator = function (index, elem) {
                     return !!elem;
                 };
             }
@@ -158,7 +158,7 @@
             return false;
         };
 
-        self.revAny = function(arr, validator) {
+        self.revAny = function (arr, validator) {
             if (!arr) {
                 return false;
             }
@@ -167,7 +167,7 @@
             arr = bitlib.common.isArray(arr) ? arr : [arr];
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(index, elem) {
+                validator = function (index, elem) {
                     return !!elem;
                 };
             }
@@ -185,7 +185,7 @@
             return false;
         };
 
-        self.pick = function(arr, validator) {
+        self.pick = function (arr, validator) {
             if (!arr) {
                 return null;
             }
@@ -194,7 +194,7 @@
             arr = bitlib.common.isArray(arr) ? arr : [arr];
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(index, elem) {
+                validator = function (index, elem) {
                     return !!elem;
                 };
             }
@@ -212,7 +212,7 @@
             return null;
         };
 
-        self.revPick = function(arr, validator) {
+        self.revPick = function (arr, validator) {
             if (!arr) {
                 return null;
             }
@@ -221,7 +221,7 @@
             arr = bitlib.common.isArray(arr) ? arr : [arr];
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(index, elem) {
+                validator = function (index, elem) {
                     return !!elem;
                 };
             }
@@ -239,7 +239,7 @@
             return null;
         };
 
-        self.scrape = function(arr, validator) {
+        self.scrape = function (arr, validator) {
             if (!arr) {
                 return [];
             }
@@ -248,7 +248,7 @@
             arr = bitlib.common.isArray(arr) ? arr : [arr];
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(index, elem) {
+                validator = function (index, elem) {
                     return !!elem;
                 };
             }
@@ -267,7 +267,7 @@
             return results;
         };
 
-        self.revScrape = function(arr, validator) {
+        self.revScrape = function (arr, validator) {
             if (!arr) {
                 return false;
             }
@@ -276,7 +276,7 @@
             arr = bitlib.common.isArray(arr) ? arr : [arr];
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(index, elem) {
+                validator = function (index, elem) {
                     return !!elem;
                 };
             }
@@ -295,7 +295,7 @@
             return results;
         };
 
-        self.eachTimeout = function(arr, callback, interval) {
+        self.eachTimeout = function (arr, callback, interval) {
             var defer = $.Deferred();
 
             if (!bitlib.common.isArray(arr) || arr.length === 0 || !bitlib.common.isFunction(callback)) {
@@ -309,7 +309,7 @@
             var i = 0,
                 len = arr.length;
 
-            var eachTimeout = function() {
+            var eachTimeout = function () {
                 try {
                     var rt = callback(i, arr[i]);
 
@@ -331,7 +331,7 @@
             return defer.promise();
         };
 
-        self.revEachTimeout = function(arr, callback, interval) {
+        self.revEachTimeout = function (arr, callback, interval) {
             var defer = $.Deferred();
 
             if (!bitlib.common.isArray(arr) || arr.length === 0 || !bitlib.common.isFunction(callback)) {
@@ -344,7 +344,7 @@
 
             var i = arr.length - 1;
 
-            var eachTimeout = function() {
+            var eachTimeout = function () {
                 try {
                     var rt = callback(i, arr[i]);
 

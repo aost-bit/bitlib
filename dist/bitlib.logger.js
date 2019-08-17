@@ -1,7 +1,7 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    var Logger = (function() {
+    var Logger = (function () {
         var className = "Logger";
 
         var INFO = "INFO",
@@ -19,11 +19,11 @@
 
             var repository = [];
 
-            self._getAll = function() {
+            self._getAll = function () {
                 return bitlib.common.copy(repository);
             };
 
-            self._add = function(type, message) {
+            self._add = function (type, message) {
                 if (!type || !message) {
                     return self;
                 }
@@ -37,7 +37,7 @@
                 return self;
             };
 
-            self._clear = function() {
+            self._clear = function () {
                 repository = [];
                 return self;
             };
@@ -45,11 +45,11 @@
             return self;
         };
 
-        Logger.prototype.getAll = function() {
+        Logger.prototype.getAll = function () {
             return this._getAll();
         };
 
-        Logger.prototype.info = function(message) {
+        Logger.prototype.info = function (message) {
             if (message) {
                 this._add(INFO, message);
                 console.info(message);
@@ -57,7 +57,7 @@
             return this;
         };
 
-        Logger.prototype.warn = function(message) {
+        Logger.prototype.warn = function (message) {
             if (message) {
                 this._add(WARN, message);
                 console.warn(message);
@@ -65,7 +65,7 @@
             return this;
         };
 
-        Logger.prototype.error = function(message) {
+        Logger.prototype.error = function (message) {
             if (message) {
                 this._add(ERROR, message);
                 console.error(message);
@@ -73,7 +73,7 @@
             return this;
         };
 
-        Logger.prototype.fatal = function(message) {
+        Logger.prototype.fatal = function (message) {
             if (message) {
                 this._add(FATAL, message);
                 console.error(message);
@@ -81,7 +81,7 @@
             return this;
         };
 
-        Logger.prototype.debug = function(message) {
+        Logger.prototype.debug = function (message) {
             if (message) {
                 this._add(DEBUG, message);
                 console.log(message);
@@ -89,18 +89,18 @@
             return this;
         };
 
-        Logger.prototype.clear = function() {
+        Logger.prototype.clear = function () {
             return this._clear();
         };
 
-        Logger.getClassName = function() {
+        Logger.getClassName = function () {
             return className;
         };
 
         return Logger;
     }());
 
-    bitlib.logger = (function() {
+    bitlib.logger = (function () {
         var self = {};
 
         self.type = "bitlib.logger";
@@ -108,11 +108,11 @@
         var logger = new Logger(),
             messageCalled = "";
 
-        self.getAll = function() {
+        self.getAll = function () {
             return logger.getAll();
         };
 
-        self.info = function(message) {
+        self.info = function (message) {
             logger.info(message);
 
             if (message) {
@@ -122,7 +122,7 @@
             return self;
         };
 
-        self.warn = function(message) {
+        self.warn = function (message) {
             logger.warn(message);
 
             if (message) {
@@ -132,7 +132,7 @@
             return self;
         };
 
-        self.error = function(message) {
+        self.error = function (message) {
             logger.error(message);
 
             if (message) {
@@ -142,7 +142,7 @@
             return self;
         };
 
-        self.fatal = function(message) {
+        self.fatal = function (message) {
             logger.fatal(message);
 
             if (message) {
@@ -152,7 +152,7 @@
             return self;
         };
 
-        self.debug = function(message) {
+        self.debug = function (message) {
             logger.debug(message);
 
             if (message) {
@@ -162,14 +162,14 @@
             return self;
         };
 
-        self.show = function() {
+        self.show = function () {
             if (messageCalled) {
                 alert(messageCalled);
             }
             return self;
         };
 
-        self.clear = function() {
+        self.clear = function () {
             logger.clear();
             return self;
         };

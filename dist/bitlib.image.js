@@ -1,12 +1,12 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.image = (function() {
+    bitlib.image = (function () {
         var self = {};
 
         self.type = "bitlib.image";
 
-        self.isUsable = function(imgType) {
+        self.isUsable = function (imgType) {
             imgType = (imgType || "").toLowerCase();
 
             if (!imgType || !bitlib.common.isString(imgType)) {
@@ -16,7 +16,7 @@
             return !!imgType.match(/(jpeg|jpg|png|bmp)/ig);
         };
 
-        self.sliceDataUrl = function(data, imgType) {
+        self.sliceDataUrl = function (data, imgType) {
             imgType = (imgType || "").toLowerCase();
 
             if (!imgType) {
@@ -31,7 +31,7 @@
             return data.replace(dataHeader, "");
         };
 
-        self.getExif = function(data, imgType) {
+        self.getExif = function (data, imgType) {
             var dataUrl = self.sliceDataUrl(data, imgType);
             if (!dataUrl) {
                 return null;
@@ -48,21 +48,21 @@
             return null;
         };
 
-        self.getHeight = function(exif) {
+        self.getHeight = function (exif) {
             if (!exif || !exif.PixelYDimension) {
                 return 0;
             }
             return exif.PixelYDimension;
         };
 
-        self.getWidth = function(exif) {
+        self.getWidth = function (exif) {
             if (!exif || !exif.PixelXDimension) {
                 return 0;
             }
             return exif.PixelXDimension;
         };
 
-        self.getRotate = function(exif) {
+        self.getRotate = function (exif) {
             if (!exif || !exif.Orientation) {
                 return 0;
             }
@@ -92,7 +92,7 @@
             return rotation;
         };
 
-        self.wrapImageType = function(imgType) {
+        self.wrapImageType = function (imgType) {
             imgType = (imgType || "").toLowerCase();
 
             if (!imgType || !bitlib.common.isString(imgType)) {

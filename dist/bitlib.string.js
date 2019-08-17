@@ -1,12 +1,12 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.string = (function() {
+    bitlib.string = (function () {
         var self = {};
 
         self.type = "bitlib.string";
 
-        self.toValue = function(val) {
+        self.toValue = function (val) {
             val = bitlib.ko.unwrap(val);
 
             if (bitlib.common.isNullOrUndefined(val)) {
@@ -20,7 +20,7 @@
             return val;
         };
 
-        self.contains = function(str, val) {
+        self.contains = function (str, val) {
             str = str || "";
 
             if (!bitlib.common.isString(str) || bitlib.common.isNullOrUndefined(val)) {
@@ -41,7 +41,7 @@
             return false;
         };
 
-        self.trim = function(str, char) {
+        self.trim = function (str, char) {
             str = str || "", char = char || ["\\s", "\\t"];
 
             if (!str || !bitlib.common.isString(str)) {
@@ -58,7 +58,7 @@
             return str.replace(regExp, "");
         };
 
-        self.ltrim = function(str, char) {
+        self.ltrim = function (str, char) {
             str = str || "", char = char || ["\\s", "\\t"];
 
             if (!str || !bitlib.common.isString(str)) {
@@ -75,7 +75,7 @@
             return str.replace(regExp, "");
         };
 
-        self.rtrim = function(str, char) {
+        self.rtrim = function (str, char) {
             str = str || "", char = char || ["\\s", "\\t"];
 
             if (!str || !bitlib.common.isString(str)) {
@@ -96,7 +96,7 @@
          * 文字列を、指定された長さになるまでfill文字列を左に追加して返却します。
          * @return {String}
          */
-        self.padding = self.paddingLeft = function(str, length, fill) {
+        self.padding = self.paddingLeft = function (str, length, fill) {
             str = str || "", length = length || 1, fill = fill || "";
 
             if (!bitlib.common.isNumber(length) || length < 1) {
@@ -110,7 +110,7 @@
          * 文字列を、指定された長さになるまでfill文字列を右に追加して返却します。
          * @return {String}
          */
-        self.paddingRight = function(str, length, fill) {
+        self.paddingRight = function (str, length, fill) {
             str = str || "", length = length || 1, fill = fill || "";
 
             if (!bitlib.common.isNumber(length) || length < 1) {
@@ -120,12 +120,12 @@
             return (str + Array(length + 1).join(fill)).slice(0, length);
         };
 
-        self.zeroPadding = function(val, length) {
+        self.zeroPadding = function (val, length) {
             val = val || 0, length = length || 1;
             return self.padding(val.toString(), length, "0");
         };
 
-        self.toBoolean = function(val) {
+        self.toBoolean = function (val) {
             if (bitlib.common.isString(val)) {
                 val = $.trim(val || "false").toLowerCase();
 
@@ -140,7 +140,7 @@
             return bitlib.common.toBoolean(val);
         };
 
-        self.trimOverlapLineFeedForLegacyIE = function(val) {
+        self.trimOverlapLineFeedForLegacyIE = function (val) {
             val = val || "";
 
             if (!bitlib.common.isString(val) || !bitlib.browser.ua.isLegacyIE) {
@@ -150,7 +150,7 @@
             return val.replace(/\r\n/g, "\n");
         };
 
-        self.replaceToWindowsLineFeed = function(val) {
+        self.replaceToWindowsLineFeed = function (val) {
             val = val || "";
 
             if (!val || !bitlib.common.isString(val)) {
@@ -160,7 +160,7 @@
             return val.replace(/(\r\n|\r|\n)/g, "\r\n");
         };
 
-        self.replaceToUnixLineFeed = function(val) {
+        self.replaceToUnixLineFeed = function (val) {
             val = val || "";
 
             if (!val || !bitlib.common.isString(val)) {
@@ -170,28 +170,28 @@
             return val.replace(/(\r\n|\r|\n)/g, "\n");
         };
 
-        self.isHiragana = function(str) {
+        self.isHiragana = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return false;
             }
             return !!str.match(/^[ぁ-ん。・ー～”゛゜]+$/);
         };
 
-        self.isEmKana = function(str) {
+        self.isEmKana = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return false;
             }
             return !!str.match(/^[ァ-ン・ー～”゛゜]+$/);
         };
 
-        self.isEnKana = function(str) {
+        self.isEnKana = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return false;
             }
             return !!str.match(/^[ｧ-ﾝ~.ﾞﾟ-]+$/);
         };
 
-        self.toEnKana = function(str) {
+        self.toEnKana = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return str;
             }
@@ -247,12 +247,12 @@
             "。", "「", "」", "、", "・", "ー", "゛", "゜"
         ];
 
-        self.replaceToEncode = function(str) {
+        self.replaceToEncode = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return "";
             }
 
-            str = str.replace(/[Ａ-Ｚａ-ｚ０-９－！”＃＄％＆’（）＝＜＞，．？＿［］｛｝＠＾～￥]/g, function(s) {
+            str = str.replace(/[Ａ-Ｚａ-ｚ０-９－！”＃＄％＆’（）＝＜＞，．？＿［］｛｝＠＾～￥]/g, function (s) {
                 return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
             });
 
@@ -265,12 +265,12 @@
             return str;
         };
 
-        self.replaceToEmcode = function(str) {
+        self.replaceToEmcode = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return "";
             }
 
-            str = str.replace(/[A-Za-z0-9]/g, function(s) {
+            str = str.replace(/[A-Za-z0-9]/g, function (s) {
                 return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
             });
 
@@ -283,56 +283,56 @@
             return str;
         };
 
-        self.snakeToCamel = function(str) {
+        self.snakeToCamel = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return "";
             }
 
             str = str
                 .replace(/^[\-_ ]/g, "")
-                .replace(/[\-_ ]./g, function(match) {
+                .replace(/[\-_ ]./g, function (match) {
                     return match.charAt(1).toUpperCase();
                 });
 
-            return str.replace(/^[a-z]/g, function(match) {
+            return str.replace(/^[a-z]/g, function (match) {
                 return match.toUpperCase();
             });
         };
 
-        self.camelToSnake = function(str) {
+        self.camelToSnake = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return "";
             }
 
             return str
-                .replace(/^[A-Z]+$/, function(match) {
+                .replace(/^[A-Z]+$/, function (match) {
                     return match.toLowerCase();
                 })
-                .replace(/^[A-Z]+/, function(match) {
+                .replace(/^[A-Z]+/, function (match) {
                     if (match.length > 1) {
-                        return match.replace(/[A-Z]$/, function(m) {
+                        return match.replace(/[A-Z]$/, function (m) {
                             return ("-" + m.toLowerCase());
                         }).toLowerCase();
                     } else {
                         return match.toLowerCase();
                     }
                 })
-                .replace(/[A-Z]+$/g, function(match) {
+                .replace(/[A-Z]+$/g, function (match) {
                     return ("-" + match.toLowerCase());
                 })
-                .replace(/[A-Z]/g, function(match) {
+                .replace(/[A-Z]/g, function (match) {
                     return ("-" + match.toLowerCase());
                 });
         };
 
-        self.isHtmlString = function(str) {
+        self.isHtmlString = function (str) {
             if (!str || !bitlib.common.isString(str)) {
                 return false;
             }
             return !!str.match(/^<[a-z]+>.*<\/[a-z]+>$/ig);
         };
 
-        self.concatValues = function(arr, delimiter) {
+        self.concatValues = function (arr, delimiter) {
             if (!delimiter || !bitlib.common.isString(delimiter)) {
                 delimiter = "";
             }
@@ -352,7 +352,7 @@
             return results.join(delimiter);
         };
 
-        self.toText = function() {
+        self.toText = function () {
             var args = [];
             args.push.apply(args, arguments);
 
@@ -384,7 +384,7 @@
             return val;
         };
 
-        self.toNumText = function(str, defaultVal) {
+        self.toNumText = function (str, defaultVal) {
             if (!bitlib.common.isString(str) && !bitlib.common.isNumber(str)) {
                 str = "";
             }
@@ -406,7 +406,7 @@
             return num.toString();
         };
 
-        self.toArrText = function() {
+        self.toArrText = function () {
             var args = [];
             args.push.apply(args, arguments);
 
@@ -458,7 +458,7 @@
             return arrText || defaultVal;
         };
 
-        self.toPropText = function() {
+        self.toPropText = function () {
             var args = [];
             args.push.apply(args, arguments);
 

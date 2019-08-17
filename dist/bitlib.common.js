@@ -1,7 +1,7 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.common = (function() {
+    bitlib.common = (function () {
         var self = {};
 
         self.type = "bitlib.common";
@@ -11,7 +11,7 @@
          * @param {Object} value
          * @return {String} 型名（小文字)
          */
-        self.typeOf = function(value) {
+        self.typeOf = function (value) {
             var type = typeof value;
 
             switch (type) {
@@ -51,7 +51,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} Array の場合 true
          */
-        self.isArray = function(obj) {
+        self.isArray = function (obj) {
             return (self.typeOf(obj) === "array");
         };
 
@@ -60,7 +60,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} Boolean の場合 true
          */
-        self.isBoolean = function(obj) {
+        self.isBoolean = function (obj) {
             return (self.typeOf(obj) === "boolean");
         };
 
@@ -69,7 +69,7 @@
          * @param {Object} obj  オブジェクト
          * @return {Boolean} Number の場合 true
          */
-        self.isNumber = function(obj) {
+        self.isNumber = function (obj) {
             return (self.typeOf(obj) === "number");
         };
 
@@ -78,7 +78,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} String の場合 true
          */
-        self.isString = function(obj) {
+        self.isString = function (obj) {
             return (self.typeOf(obj) === "string");
         };
 
@@ -87,11 +87,11 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} Date の場合 true
          */
-        self.isDate = function(obj) {
+        self.isDate = function (obj) {
             return (self.typeOf(obj) === "date");
         };
 
-        self.isValidDate = function(obj) {
+        self.isValidDate = function (obj) {
             if (!self.isDate(obj)) {
                 return false;
             }
@@ -103,7 +103,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} RegExp の場合 true
          */
-        self.isRegExp = function(obj) {
+        self.isRegExp = function (obj) {
             return (self.typeOf(obj) === "regexp");
         };
 
@@ -112,7 +112,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} Observable または ObservableArray の場合 true
          */
-        self.isObservable = function(obj) {
+        self.isObservable = function (obj) {
             var type = self.typeOf(obj);
             return (type === "observable" || type === "observableArray");
         };
@@ -122,7 +122,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} ObservableArray の場合 true
          */
-        self.isObservableArray = function(obj) {
+        self.isObservableArray = function (obj) {
             return (self.typeOf(obj) === "observableArray");
         };
 
@@ -131,7 +131,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} Function の場合 true
          */
-        self.isFunction = function(obj) {
+        self.isFunction = function (obj) {
             if (self.isRegExp(obj) || self.isObservable(obj)) {
                 return false;
             }
@@ -143,7 +143,7 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} jQuery の場合 true
          */
-        self.isJQuery = function(obj) {
+        self.isJQuery = function (obj) {
             return (self.typeOf(obj) === "jquery");
         };
 
@@ -152,26 +152,26 @@
          * @param obj {Object} オブジェクト
          * @return {Boolean} Object の場合 true
          */
-        self.isObject = function(obj) {
+        self.isObject = function (obj) {
             return (self.typeOf(obj) === "object");
         };
 
-        self.isUndefined = function(val) {
+        self.isUndefined = function (val) {
             return (val === undefined);
         };
 
-        self.isNullOrUndefined = function(val) {
+        self.isNullOrUndefined = function (val) {
             return (val === undefined || val === null);
         };
 
-        self.toBoolean = function(val) {
+        self.toBoolean = function (val) {
             if (self.isBoolean(val)) {
                 return val;
             }
             return Boolean(val);
         };
 
-        self.toInteger = function(val) {
+        self.toInteger = function (val) {
             var result = 0;
 
             try {
@@ -188,7 +188,7 @@
             return result;
         };
 
-        self.toNumber = function(val) {
+        self.toNumber = function (val) {
             var result = 0;
 
             try {
@@ -205,7 +205,7 @@
             return result;
         };
 
-        self.copy = function(original) {
+        self.copy = function (original) {
             if (self.isObject(original)) {
                 return $.extend({}, {}, original);
             }
@@ -215,7 +215,7 @@
             return original;
         };
 
-        self.copyDeep = function(original) {
+        self.copyDeep = function (original) {
             if (self.isObject(original)) {
                 return $.extend(true, {}, original);
             }
@@ -233,7 +233,7 @@
             return original;
         };
 
-        self.publishTemporaryUniqueName = function() {
+        self.publishTemporaryUniqueName = function () {
             return (new Date().getTime().toString(16) + Math.floor(1000 * Math.random()).toString(16));
         };
 

@@ -1,19 +1,19 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.ko = (function() {
+    bitlib.ko = (function () {
         var self = {};
 
         self.type = "bitlib.ko";
 
-        self.unwrap = function(val) {
+        self.unwrap = function (val) {
             if (!val || !bitlib.common.isObservable(val)) {
                 return val;
             }
             return ko.utils.unwrapObservable(val);
         };
 
-        self.addBindingHandler = function(name, newHandler) {
+        self.addBindingHandler = function (name, newHandler) {
             if (!name || !newHandler) {
                 return self;
             }
@@ -31,7 +31,7 @@
     }());
 
     bitlib.ko.addBindingHandler("availability", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isAvailable = valueAccessor();
             isAvailable = ko.isObservable(isAvailable) ? isAvailable() : isAvailable;
 
@@ -43,7 +43,7 @@
                     .addClass("disable");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isAvailable = valueAccessor();
             isAvailable = ko.isObservable(isAvailable) ? isAvailable() : isAvailable;
 
@@ -60,7 +60,7 @@
     });
 
     bitlib.ko.addBindingHandler("inavailability", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInavailable = valueAccessor();
             isInavailable = ko.isObservable(isInavailable) ? isInavailable() : isInavailable;
 
@@ -72,7 +72,7 @@
                     .addClass("enable");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInavailable = valueAccessor();
             isInavailable = ko.isObservable(isInavailable) ? isInavailable() : isInavailable;
 
@@ -89,7 +89,7 @@
     });
 
     bitlib.ko.addBindingHandler("validity", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isValid = valueAccessor();
             isValid = ko.isObservable(isValid) ? isValid() : isValid;
 
@@ -101,7 +101,7 @@
                     .addClass("invalid");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isValid = valueAccessor();
             isValid = ko.isObservable(isValid) ? isValid() : isValid;
 
@@ -118,7 +118,7 @@
     });
 
     bitlib.ko.addBindingHandler("invalidity", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInvalid = valueAccessor();
             isInvalid = ko.isObservable(isInvalid) ? isInvalid() : isInvalid;
 
@@ -130,7 +130,7 @@
                     .addClass("valid");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInvalid = valueAccessor();
             isInvalid = ko.isObservable(isInvalid) ? isInvalid() : isInvalid;
 
@@ -147,7 +147,7 @@
     });
 
     bitlib.ko.addBindingHandler("visibility", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isVisible = valueAccessor();
             isVisible = ko.isObservable(isVisible) ? isVisible() : isVisible;
 
@@ -159,7 +159,7 @@
                     .addClass("invisible");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isVisible = valueAccessor();
             isVisible = ko.isObservable(isVisible) ? isVisible() : isVisible;
 
@@ -176,7 +176,7 @@
     });
 
     bitlib.ko.addBindingHandler("invisibility", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInvisible = valueAccessor();
             isInvisible = ko.isObservable(isInvisible) ? isInvisible() : isInvisible;
 
@@ -188,7 +188,7 @@
                     .addClass("visible");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInvisible = valueAccessor();
             isInvisible = ko.isObservable(isInvisible) ? isInvisible() : isInvisible;
 
@@ -205,7 +205,7 @@
     });
 
     bitlib.ko.addBindingHandler("activity", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isVisible = valueAccessor();
             isVisible = ko.isObservable(isVisible) ? isVisible() : isVisible;
 
@@ -217,7 +217,7 @@
                     .addClass("inactive");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isVisible = valueAccessor();
             isVisible = ko.isObservable(isVisible) ? isVisible() : isVisible;
 
@@ -234,7 +234,7 @@
     });
 
     bitlib.ko.addBindingHandler("inactivity", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInactive = valueAccessor();
             isInactive = ko.isObservable(isInactive) ? isInactive() : isInactive;
 
@@ -246,7 +246,7 @@
                     .addClass("active");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isInactive = valueAccessor();
             isInactive = ko.isObservable(isInactive) ? isInactive() : isInactive;
 
@@ -263,7 +263,7 @@
     });
 
     bitlib.ko.addBindingHandler("focus", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isFocused = valueAccessor();
             isFocused = ko.isObservable(isFocused) ? isFocused() : isFocused;
 
@@ -272,7 +272,7 @@
                     .addClass("focused");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var isFocused = valueAccessor();
             isFocused = ko.isObservable(isFocused) ? isFocused() : isFocused;
 
@@ -287,7 +287,7 @@
     });
 
     bitlib.ko.addBindingHandler("stopEventPropagation", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var targetEvent = valueAccessor();
             targetEvent = ko.isObservable(targetEvent) ? targetEvent() : targetEvent;
 
@@ -298,7 +298,7 @@
             for (var i = 0, len = targetEvent.length; i < len; i++) {
                 if (targetEvent[i]) {
                     $element
-                        .on(targetEvent[i], function(event) {
+                        .on(targetEvent[i], function (event) {
                             event.stopPropagation();
                         });
                 }
@@ -307,10 +307,10 @@
     });
 
     bitlib.ko.addBindingHandler("clickIf", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-            var newValueAccessor = function() {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var newValueAccessor = function () {
                 return {
-                    click: function(data, event) {
+                    click: function (data, event) {
                         if (valueAccessor()["if"]()) {
                             return valueAccessor()["do"].call(viewModel, data, event);
                         } else {
@@ -328,7 +328,7 @@
     });
 
     bitlib.ko.addBindingHandler("eachRows", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var index = valueAccessor();
             index = ko.isObservable(index) ? index() : index;
 
@@ -340,12 +340,12 @@
                     .addClass("rowno-" + (index + 1).toString());
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var index = valueAccessor();
             index = ko.isObservable(index) ? index() : index;
 
             $(element)
-                .removeClass(function(index, className) {
+                .removeClass(function (index, className) {
                     return (className.match(/(odd|even|rowno-[0-9]+)/ig) || []).join(" ");
                 });
 
@@ -360,7 +360,7 @@
     });
 
     bitlib.ko.addBindingHandler("eachElems", {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var index = valueAccessor();
             index = ko.isObservable(index) ? index() : index;
 
@@ -385,12 +385,12 @@
                     .addClass("last-elem");
             }
         },
-        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var index = valueAccessor();
             index = ko.isObservable(index) ? index() : index;
 
             $(element)
-                .removeClass(function(index, className) {
+                .removeClass(function (index, className) {
                     return (className.match(/(odd|even|elemno-[0-9]+|first-elem|last-elem)/ig) || []).join(" ");
                 });
 

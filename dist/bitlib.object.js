@@ -1,12 +1,12 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.object = (function() {
+    bitlib.object = (function () {
         var self = {};
 
         self.type = "bitlib.object";
 
-        self.isEmpty = function(obj) {
+        self.isEmpty = function (obj) {
             obj = bitlib.common.isObservable(obj) ? obj() : obj;
 
             if (!bitlib.common.isObject(obj)) {
@@ -16,7 +16,7 @@
             return $.isEmptyObject(obj);
         };
 
-        self.getPropertyLength = function(obj) {
+        self.getPropertyLength = function (obj) {
             obj = bitlib.common.isObservable(obj) ? obj() : obj;
 
             if (!bitlib.common.isObject(obj)) {
@@ -33,7 +33,7 @@
             return len;
         };
 
-        self.getPropertyByPath = function(obj, path) {
+        self.getPropertyByPath = function (obj, path) {
             obj = obj || {}, path = path || "";
 
             if (!bitlib.common.isObject(obj) || !bitlib.common.isString(path)) {
@@ -71,7 +71,7 @@
             return prop;
         };
 
-        self.removeUndefined = function(obj) {
+        self.removeUndefined = function (obj) {
             obj = obj || {};
 
             if (!bitlib.common.isObject(obj)) {
@@ -90,7 +90,7 @@
             return results;
         };
 
-        self.removeNullOrUndefined = function(obj) {
+        self.removeNullOrUndefined = function (obj) {
             obj = obj || {};
 
             if (!bitlib.common.isObject(obj)) {
@@ -109,7 +109,7 @@
             return results;
         };
 
-        self.each = function(obj, callback) {
+        self.each = function (obj, callback) {
             obj = bitlib.common.isObservable(obj) ? obj() : obj;
 
             if (!bitlib.common.isObject(obj) || !bitlib.common.isFunction(callback)) {
@@ -131,7 +131,7 @@
             return self;
         };
 
-        self.any = function(obj, validator) {
+        self.any = function (obj, validator) {
             obj = bitlib.common.isObservable(obj) ? obj() : obj;
 
             if (!bitlib.common.isObject(obj)) {
@@ -139,7 +139,7 @@
             }
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(key, val) {
+                validator = function (key, val) {
                     return !!val;
                 };
             }
@@ -157,7 +157,7 @@
             return false;
         };
 
-        self.pick = function(obj, validator) {
+        self.pick = function (obj, validator) {
             obj = bitlib.common.isObservable(obj) ? obj() : obj;
 
             if (!bitlib.common.isObject(obj)) {
@@ -165,7 +165,7 @@
             }
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(key, val) {
+                validator = function (key, val) {
                     return !!val;
                 };
             }
@@ -183,7 +183,7 @@
             return null;
         };
 
-        self.scrape = function(obj, validator) {
+        self.scrape = function (obj, validator) {
             obj = bitlib.common.isObservable(obj) ? obj() : obj;
 
             if (!bitlib.common.isObject(obj)) {
@@ -191,7 +191,7 @@
             }
 
             if (!bitlib.common.isFunction(validator)) {
-                validator = function(key, val) {
+                validator = function (key, val) {
                     return !!val;
                 };
             }
@@ -210,7 +210,7 @@
             return results;
         };
 
-        self.eachTimeout = function(obj, callback, interval) {
+        self.eachTimeout = function (obj, callback, interval) {
             var defer = $.Deferred();
 
             if (!bitlib.common.isObject(obj) || !bitlib.common.isFunction(callback)) {
@@ -235,7 +235,7 @@
                 return defer.resolve().promise();
             }
 
-            var eachTimeout = function() {
+            var eachTimeout = function () {
                 try {
                     var rt = callback(keys[i], obj[keys[i]]);
 
@@ -257,7 +257,7 @@
             return defer.promise();
         };
 
-        self.concatSequentialProperties = function(source, propNames) {
+        self.concatSequentialProperties = function (source, propNames) {
             if (!bitlib.common.isObject(source) || !bitlib.common.isArray(propNames) || propNames.length === 0) {
                 return {};
             }

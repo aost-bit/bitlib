@@ -1,12 +1,12 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
-    bitlib.ajax = (function() {
+    bitlib.ajax = (function () {
         var self = {};
 
         self.type = "bitlib.ajax";
 
-        self.isSuccess = function(reply) {
+        self.isSuccess = function (reply) {
             if (!reply) {
                 return false;
             }
@@ -18,7 +18,7 @@
             return false;
         };
 
-        self.send = function(url, request, options) {
+        self.send = function (url, request, options) {
             if (!url) {
                 bitlib.logger.error("POST 送信先が指定されていません.");
                 return null;
@@ -36,10 +36,10 @@
                     data: bitlib.json.stringify(request),
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
-                    success: function(data) {
+                    success: function (data) {
                         defer.resolve(data);
                     },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
                         defer.reject(XMLHttpRequest, textStatus, errorThrown);
                     }
                 });
@@ -52,7 +52,7 @@
             return null;
         };
 
-        self.submit = function(url, request, attr) {
+        self.submit = function (url, request, attr) {
             if (!url) {
                 bitlib.logger.error("POST 送信先が指定されていません.");
                 return self;

@@ -1,8 +1,8 @@
-﻿(function(bitlib) {
+﻿(function (bitlib) {
     "use strict";
 
     // moment.js 拡張
-    moment.fn.foreach = function(to, step, callback) {
+    moment.fn.foreach = function (to, step, callback) {
         try {
             var temp = this.clone();
             while (temp <= to) {
@@ -16,12 +16,12 @@
         }
     };
 
-    moment.fn.isWeekday = function() {
+    moment.fn.isWeekday = function () {
         var temp = this.day();
         return (temp !== 0 && temp !== 6);
     };
 
-    var Time = (function() {
+    var Time = (function () {
         var className = "Time";
 
         function Time(initObj) {
@@ -31,11 +31,11 @@
 
             var data = new Date(1970, 0, 1);
 
-            self._getData = function() {
+            self._getData = function () {
                 return moment(data).toDate();
             };
 
-            self._setData = function(newData) {
+            self._setData = function (newData) {
                 if (bitlib.common.isDate(newData)) {
                     data = new Date(
                         1970,
@@ -57,22 +57,22 @@
             return self;
         }
 
-        Time.prototype.clone = function() {
+        Time.prototype.clone = function () {
             return new Time(this._getData());
         };
 
-        Time.prototype.getTime = function() {
+        Time.prototype.getTime = function () {
             var data = this._getData(),
                 base = new Date(1970, 0, 1);
 
             return data.getTime() - base.getTime();
         };
 
-        Time.prototype.getHours = function() {
+        Time.prototype.getHours = function () {
             return this._getData().getHours();
         };
 
-        Time.prototype.setHours = function(val) {
+        Time.prototype.setHours = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -88,11 +88,11 @@
             return self;
         };
 
-        Time.prototype.getMinutes = function() {
+        Time.prototype.getMinutes = function () {
             return this._getData().getMinutes();
         };
 
-        Time.prototype.setMinutes = function(val) {
+        Time.prototype.setMinutes = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -108,11 +108,11 @@
             return self;
         };
 
-        Time.prototype.getSeconds = function() {
+        Time.prototype.getSeconds = function () {
             return this._getData().getSeconds();
         };
 
-        Time.prototype.setSeconds = function(val) {
+        Time.prototype.setSeconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -128,11 +128,11 @@
             return self;
         };
 
-        Time.prototype.getMilliseconds = function() {
+        Time.prototype.getMilliseconds = function () {
             return this._getData().getMilliseconds();
         };
 
-        Time.prototype.setMilliseconds = function(val) {
+        Time.prototype.setMilliseconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -148,14 +148,14 @@
             return self;
         };
 
-        Time.getClassName = function() {
+        Time.getClassName = function () {
             return className;
         };
 
         return Time;
     }());
 
-    var TimeSpan = (function() {
+    var TimeSpan = (function () {
         var className = "TimeSpan";
 
         function TimeSpan(initVal) {
@@ -165,11 +165,11 @@
 
             var data = 0; // millisec
 
-            self._getData = function() {
+            self._getData = function () {
                 return data;
             };
 
-            self._setData = function(newData) {
+            self._setData = function (newData) {
                 newData = bitlib.common.toInteger(newData);
 
                 if (!isNaN(newData)) {
@@ -186,19 +186,19 @@
             return self;
         }
 
-        TimeSpan.prototype.clone = function() {
+        TimeSpan.prototype.clone = function () {
             return new TimeSpan(this._getData());
         };
 
-        TimeSpan.prototype.getTime = function() {
+        TimeSpan.prototype.getTime = function () {
             return this._getData();
         };
 
-        TimeSpan.prototype.getHours = function() {
+        TimeSpan.prototype.getHours = function () {
             return Math.floor(this._getData() / 3600000);
         };
 
-        TimeSpan.prototype.setHours = function(val) {
+        TimeSpan.prototype.setHours = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -214,12 +214,12 @@
             return self;
         };
 
-        TimeSpan.prototype.getMinutes = function() {
+        TimeSpan.prototype.getMinutes = function () {
             var rem = this._getData() % 3600000;
             return Math.floor(rem / 60000);
         };
 
-        TimeSpan.prototype.setMinutes = function(val) {
+        TimeSpan.prototype.setMinutes = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -237,12 +237,12 @@
             return self;
         };
 
-        TimeSpan.prototype.getSeconds = function() {
+        TimeSpan.prototype.getSeconds = function () {
             var rem = this._getData() % 60000;
             return Math.floor(rem / 1000);
         };
 
-        TimeSpan.prototype.setSeconds = function(val) {
+        TimeSpan.prototype.setSeconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -260,11 +260,11 @@
             return self;
         };
 
-        TimeSpan.prototype.getMilliseconds = function() {
+        TimeSpan.prototype.getMilliseconds = function () {
             return this._getData() % 1000;
         };
 
-        TimeSpan.prototype.setMilliseconds = function(val) {
+        TimeSpan.prototype.setMilliseconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -280,14 +280,14 @@
             return self;
         };
 
-        TimeSpan.getClassName = function() {
+        TimeSpan.getClassName = function () {
             return className;
         };
 
         return TimeSpan;
     }());
 
-    var DateTime = (function() {
+    var DateTime = (function () {
         var className = "DateTime";
 
         function DateTime(initObj) {
@@ -297,11 +297,11 @@
 
             var data = new Date();
 
-            self._getData = function() {
+            self._getData = function () {
                 return moment(data).toDate();
             };
 
-            self._setData = function(newData) {
+            self._setData = function (newData) {
                 if (bitlib.common.isDate(newData)) {
                     data = moment(newData).toDate();
                 }
@@ -315,23 +315,23 @@
             return self;
         }
 
-        DateTime.prototype.toDate = function() {
+        DateTime.prototype.toDate = function () {
             return this._getData();
         };
 
-        DateTime.prototype.clone = function() {
+        DateTime.prototype.clone = function () {
             return new DateTime(this._getData());
         };
 
-        DateTime.prototype.getTime = function() {
+        DateTime.prototype.getTime = function () {
             return this._getData().getTime();
         };
 
-        DateTime.prototype.getYears = function() {
+        DateTime.prototype.getYears = function () {
             return this._getData().getFullYear();
         };
 
-        DateTime.prototype.setYears = function(val) {
+        DateTime.prototype.setYears = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -347,7 +347,7 @@
             return self;
         };
 
-        DateTime.prototype.addYears = function(val) {
+        DateTime.prototype.addYears = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -361,7 +361,7 @@
             return self;
         };
 
-        DateTime.prototype.subtractYears = function(val) {
+        DateTime.prototype.subtractYears = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -375,21 +375,21 @@
             return self;
         };
 
-        DateTime.prototype.toNextYear = function() {
+        DateTime.prototype.toNextYear = function () {
             this.addYears(1);
             return this;
         };
 
-        DateTime.prototype.toLastYear = function() {
+        DateTime.prototype.toLastYear = function () {
             this.subtractYears(1);
             return this;
         };
 
-        DateTime.prototype.getMonths = function() {
+        DateTime.prototype.getMonths = function () {
             return this._getData().getMonth() + 1;
         };
 
-        DateTime.prototype.setMonths = function(val) {
+        DateTime.prototype.setMonths = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -405,7 +405,7 @@
             return self;
         };
 
-        DateTime.prototype.addMonths = function(val) {
+        DateTime.prototype.addMonths = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -419,7 +419,7 @@
             return self;
         };
 
-        DateTime.prototype.subtractMonths = function(val) {
+        DateTime.prototype.subtractMonths = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -433,21 +433,21 @@
             return self;
         };
 
-        DateTime.prototype.toNextMonth = function() {
+        DateTime.prototype.toNextMonth = function () {
             this.addMonths(1);
             return this;
         };
 
-        DateTime.prototype.toLastMonth = function() {
+        DateTime.prototype.toLastMonth = function () {
             this.subtractMonths(1);
             return this;
         };
 
-        DateTime.prototype.getDays = function() {
+        DateTime.prototype.getDays = function () {
             return this._getData().getDate();
         };
 
-        DateTime.prototype.setDays = function(val) {
+        DateTime.prototype.setDays = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -463,7 +463,7 @@
             return self;
         };
 
-        DateTime.prototype.addDays = function(val) {
+        DateTime.prototype.addDays = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -477,7 +477,7 @@
             return self;
         };
 
-        DateTime.prototype.subtractDays = function(val) {
+        DateTime.prototype.subtractDays = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -491,21 +491,21 @@
             return self;
         };
 
-        DateTime.prototype.toNextDay = function() {
+        DateTime.prototype.toNextDay = function () {
             this.addDays(1);
             return this;
         };
 
-        DateTime.prototype.toLastDay = function() {
+        DateTime.prototype.toLastDay = function () {
             this.subtractDays(1);
             return this;
         };
 
-        DateTime.prototype.getHours = function() {
+        DateTime.prototype.getHours = function () {
             return this._getData().getHours();
         };
 
-        DateTime.prototype.setHours = function(val) {
+        DateTime.prototype.setHours = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -521,7 +521,7 @@
             return self;
         };
 
-        DateTime.prototype.addHours = function(val) {
+        DateTime.prototype.addHours = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -535,7 +535,7 @@
             return self;
         };
 
-        DateTime.prototype.subtractHours = function(val) {
+        DateTime.prototype.subtractHours = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -549,11 +549,11 @@
             return self;
         };
 
-        DateTime.prototype.getMinutes = function() {
+        DateTime.prototype.getMinutes = function () {
             return this._getData().getMinutes();
         };
 
-        DateTime.prototype.setMinutes = function(val) {
+        DateTime.prototype.setMinutes = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -569,7 +569,7 @@
             return self;
         };
 
-        DateTime.prototype.addMinutes = function(val) {
+        DateTime.prototype.addMinutes = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -583,7 +583,7 @@
             return self;
         };
 
-        DateTime.prototype.subtractMinutes = function(val) {
+        DateTime.prototype.subtractMinutes = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -597,11 +597,11 @@
             return self;
         };
 
-        DateTime.prototype.getSeconds = function() {
+        DateTime.prototype.getSeconds = function () {
             return this._getData().getSeconds();
         };
 
-        DateTime.prototype.setSeconds = function(val) {
+        DateTime.prototype.setSeconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -617,7 +617,7 @@
             return self;
         };
 
-        DateTime.prototype.addSeconds = function(val) {
+        DateTime.prototype.addSeconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -631,7 +631,7 @@
             return self;
         };
 
-        DateTime.prototype.subtractSeconds = function(val) {
+        DateTime.prototype.subtractSeconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -645,11 +645,11 @@
             return self;
         };
 
-        DateTime.prototype.getMilliseconds = function() {
+        DateTime.prototype.getMilliseconds = function () {
             return this._getData().getMilliseconds();
         };
 
-        DateTime.prototype.setMilliseconds = function(val) {
+        DateTime.prototype.setMilliseconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -665,7 +665,7 @@
             return self;
         };
 
-        DateTime.prototype.addMilliseconds = function(val) {
+        DateTime.prototype.addMilliseconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -679,7 +679,7 @@
             return self;
         };
 
-        DateTime.prototype.subtractMilliseconds = function(val) {
+        DateTime.prototype.subtractMilliseconds = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -693,12 +693,12 @@
             return self;
         };
 
-        DateTime.prototype.getDateOnly = function() {
+        DateTime.prototype.getDateOnly = function () {
             var data = this._getData();
             return new Date(data.getFullYear(), data.getMonth(), data.getDate());
         };
 
-        DateTime.prototype.setDateOnly = function(obj) {
+        DateTime.prototype.setDateOnly = function (obj) {
             var self = this;
 
             obj = (!obj || !obj.isDateTimeObj) ? obj : obj.toDate();
@@ -714,12 +714,12 @@
             return self;
         };
 
-        DateTime.prototype.getTimeOnly = function() {
+        DateTime.prototype.getTimeOnly = function () {
             var data = this._getData();
             return new Time(data);
         };
 
-        DateTime.prototype.setTimeOnly = function(obj) {
+        DateTime.prototype.setTimeOnly = function (obj) {
             var self = this;
 
             if (!obj || !obj.isTimeObj) {
@@ -732,7 +732,7 @@
             return self;
         };
 
-        DateTime.prototype.isEqual = function(obj) {
+        DateTime.prototype.isEqual = function (obj) {
             obj = (!obj || !obj.isDateTimeObj) ? obj : obj.toDate();
 
             if (!bitlib.common.isDate(obj)) {
@@ -742,7 +742,7 @@
             return this.getTime() === obj.getTime();
         };
 
-        DateTime.prototype.isEqualDate = function(obj) {
+        DateTime.prototype.isEqualDate = function (obj) {
             obj = (!obj || !obj.isDateTimeObj) ? obj : obj.toDate();
 
             if (!bitlib.common.isDate(obj)) {
@@ -752,7 +752,7 @@
             return Math.floor(this.getTime() / 86400000) === Math.floor(obj.getTime() / 86400000);
         };
 
-        DateTime.prototype.isEqualTime = function(obj) {
+        DateTime.prototype.isEqualTime = function (obj) {
             obj = (!obj || !obj.isDateTimeObj) ? obj : obj.toDate();
 
             if (!bitlib.common.isDate(obj)) {
@@ -762,14 +762,14 @@
             return (this.getTime() % 86400000) === (obj.getTime() % 86400000);
         };
 
-        DateTime.getClassName = function() {
+        DateTime.getClassName = function () {
             return className;
         };
 
         return DateTime;
     }());
 
-    var DateTimeRange = (function() {
+    var DateTimeRange = (function () {
         var className = "DateTimeRange";
 
         function DateTimeRange(initObj) {
@@ -780,11 +780,11 @@
             var beginData = new Date(),
                 endData = new Date();
 
-            self._getBeginData = function() {
+            self._getBeginData = function () {
                 return moment(beginData).toDate();
             };
 
-            self._setBeginData = function(newData) {
+            self._setBeginData = function (newData) {
                 if (bitlib.common.isDate(newData)) {
                     beginData = moment(newData).toDate();
 
@@ -795,11 +795,11 @@
                 return self;
             };
 
-            self._getEndData = function() {
+            self._getEndData = function () {
                 return moment(endData).toDate();
             };
 
-            self._setEndData = function(newData) {
+            self._setEndData = function (newData) {
                 if (bitlib.common.isDate(newData)) {
                     endData = moment(newData).toDate();
 
@@ -830,36 +830,36 @@
             return self;
         }
 
-        DateTimeRange.prototype.clone = function() {
+        DateTimeRange.prototype.clone = function () {
             return new DateTimeRange({
                 begin: this._getBeginData(),
                 end: this._getEndData()
             });
         };
 
-        DateTimeRange.prototype.getDurationTime = function() {
+        DateTimeRange.prototype.getDurationTime = function () {
             return this._getEndData().getTime() - this._getBeginData().getTime();
         };
 
-        DateTimeRange.prototype.getBegin = function() {
+        DateTimeRange.prototype.getBegin = function () {
             return this._getBeginData();
         };
 
-        DateTimeRange.prototype.getEnd = function() {
+        DateTimeRange.prototype.getEnd = function () {
             return this._getEndData();
         };
 
-        DateTimeRange.prototype.setBegin = function(obj) {
+        DateTimeRange.prototype.setBegin = function (obj) {
             this._setBeginData(obj);
             return this;
         };
 
-        DateTimeRange.prototype.setEnd = function(obj) {
+        DateTimeRange.prototype.setEnd = function (obj) {
             this._setEndData(obj);
             return this;
         };
 
-        DateTimeRange.prototype.shiftForward = function(val) {
+        DateTimeRange.prototype.shiftForward = function (val) {
             var self = this;
 
             if (bitlib.common.isObject(val) && val.isTimeSpanObj) {
@@ -881,7 +881,7 @@
             return self;
         };
 
-        DateTimeRange.prototype.shiftBackward = function(val) {
+        DateTimeRange.prototype.shiftBackward = function (val) {
             var self = this;
 
             if (bitlib.common.isObject(val) && val.isTimeSpanObj) {
@@ -903,7 +903,7 @@
             return self;
         };
 
-        DateTimeRange.prototype.isOverlapped = function(obj) {
+        DateTimeRange.prototype.isOverlapped = function (obj) {
             var self = this;
 
             if (!obj || !obj.isDateTimeRangeObj) {
@@ -916,7 +916,7 @@
             return (obj.getBegin().getTime() <= endData.getTime()) && (beginData.getTime() <= obj.getEnd().getTime());
         };
 
-        DateTimeRange.prototype.contains = function(obj) {
+        DateTimeRange.prototype.contains = function (obj) {
             var self = this;
 
             obj = (!obj || !obj.isDateTimeObj) ? obj : obj.toDate();
@@ -930,7 +930,7 @@
             return (obj.getTime() <= endData.getTime()) && (beginData.getTime() <= obj.getTime());
         };
 
-        DateTimeRange.prototype.isEqual = function(obj) {
+        DateTimeRange.prototype.isEqual = function (obj) {
             var self = this;
 
             if (!obj || !obj.isDateTimeRangeObj) {
@@ -943,7 +943,7 @@
             return (obj.getBegin().getTime() === beginData.getTime()) && (obj.getEnd().getTime() === endData.getTime());
         };
 
-        DateTimeRange.prototype.getIntersectRange = function(obj) {
+        DateTimeRange.prototype.getIntersectRange = function (obj) {
             var self = this;
 
             if (!self.isOverlapped(obj)) {
@@ -962,7 +962,7 @@
             });
         };
 
-        DateTimeRange.prototype.getUnionRange = function(obj) {
+        DateTimeRange.prototype.getUnionRange = function (obj) {
             var self = this;
 
             if (!self.isOverlapped(obj)) {
@@ -981,7 +981,7 @@
             });
         };
 
-        DateTimeRange.prototype.eachDay = function(callback) {
+        DateTimeRange.prototype.eachDay = function (callback) {
             var self = this;
 
             if (!callback || !bitlib.common.isFunction(callback)) {
@@ -998,14 +998,14 @@
             return self;
         };
 
-        DateTimeRange.getClassName = function() {
+        DateTimeRange.getClassName = function () {
             return className;
         };
 
         return DateTimeRange;
     }());
 
-    var DateRange = (function() {
+    var DateRange = (function () {
         var className = "DateRange";
 
         function DateRange(initObj) {
@@ -1016,11 +1016,11 @@
             var beginData = new Date(),
                 endData = new Date();
 
-            self._getBeginData = function() {
+            self._getBeginData = function () {
                 return moment(beginData).toDate();
             };
 
-            self._setBeginData = function(newData) {
+            self._setBeginData = function (newData) {
                 if (bitlib.common.isDate(newData)) {
                     beginData = new Date(
                         newData.getFullYear(),
@@ -1043,11 +1043,11 @@
                 return self;
             };
 
-            self._getEndData = function() {
+            self._getEndData = function () {
                 return moment(endData).toDate();
             };
 
-            self._setEndData = function(newData) {
+            self._setEndData = function (newData) {
                 if (bitlib.common.isDate(newData)) {
                     endData = new Date(
                         newData.getFullYear(),
@@ -1093,18 +1093,18 @@
         var _super = DateTimeRange;
         inherits(DateRange, _super);
 
-        DateRange.prototype.clone = function() {
+        DateRange.prototype.clone = function () {
             return new DateRange({
                 begin: this._getBeginData(),
                 end: this._getEndData()
             });
         };
 
-        DateRange.prototype.getDurationDays = function() {
+        DateRange.prototype.getDurationDays = function () {
             return Math.ceil(this.getDurationTime() / 86400000);
         };
 
-        DateRange.prototype.getIntersectRange = function(obj) {
+        DateRange.prototype.getIntersectRange = function (obj) {
             var self = this;
 
             if (!self.isOverlapped(obj)) {
@@ -1123,7 +1123,7 @@
             });
         };
 
-        DateRange.prototype.getUnionRange = function(obj) {
+        DateRange.prototype.getUnionRange = function (obj) {
             var self = this;
 
             if (!self.isOverlapped(obj)) {
@@ -1142,14 +1142,14 @@
             });
         };
 
-        DateRange.getClassName = function() {
+        DateRange.getClassName = function () {
             return className;
         };
 
         return DateRange;
     }());
 
-    var TimeRange = (function() {
+    var TimeRange = (function () {
         var className = "TimeRange";
 
         function TimeRange(initObj) {
@@ -1160,11 +1160,11 @@
             var beginData = 0,
                 endData = 0;
 
-            self._getBeginData = function() {
+            self._getBeginData = function () {
                 return beginData;
             };
 
-            self._setBeginData = function(newData) {
+            self._setBeginData = function (newData) {
                 if (bitlib.common.isNumber(newData)) {
                     beginData = newData;
 
@@ -1175,11 +1175,11 @@
                 return self;
             };
 
-            self._getEndData = function() {
+            self._getEndData = function () {
                 return endData;
             };
 
-            self._setEndData = function(newData) {
+            self._setEndData = function (newData) {
                 if (bitlib.common.isNumber(newData)) {
                     endData = newData;
 
@@ -1210,36 +1210,36 @@
             return self;
         }
 
-        TimeRange.prototype.clone = function() {
+        TimeRange.prototype.clone = function () {
             return new TimeRange({
                 begin: this._getBeginData(),
                 end: this._getEndData()
             });
         };
 
-        TimeRange.prototype.getDuration = function() {
+        TimeRange.prototype.getDuration = function () {
             return this._getEndData() - this._getBeginData();
         };
 
-        TimeRange.prototype.getBegin = function() {
+        TimeRange.prototype.getBegin = function () {
             return this._getBeginData();
         };
 
-        TimeRange.prototype.getEnd = function() {
+        TimeRange.prototype.getEnd = function () {
             return this._getEndData();
         };
 
-        TimeRange.prototype.setBegin = function(val) {
+        TimeRange.prototype.setBegin = function (val) {
             this._setBeginData(val);
             return this;
         };
 
-        TimeRange.prototype.setEnd = function(val) {
+        TimeRange.prototype.setEnd = function (val) {
             this._setEndData(val);
             return this;
         };
 
-        TimeRange.prototype.shiftForward = function(val) {
+        TimeRange.prototype.shiftForward = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -1257,7 +1257,7 @@
             return self;
         };
 
-        TimeRange.prototype.shiftBackward = function(val) {
+        TimeRange.prototype.shiftBackward = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -1275,7 +1275,7 @@
             return self;
         };
 
-        TimeRange.prototype.isOverlapped = function(obj) {
+        TimeRange.prototype.isOverlapped = function (obj) {
             var self = this;
 
             if (!obj || !obj.isTimeRangeObj) {
@@ -1288,7 +1288,7 @@
             return (obj.getBegin() <= endData) && (beginData <= obj.getEnd());
         };
 
-        TimeRange.prototype.contains = function(val) {
+        TimeRange.prototype.contains = function (val) {
             var self = this;
 
             if (!bitlib.common.isNumber(val)) {
@@ -1301,7 +1301,7 @@
             return (val <= endData) && (beginData <= val);
         };
 
-        TimeRange.prototype.isEqual = function(obj) {
+        TimeRange.prototype.isEqual = function (obj) {
             var self = this;
 
             if (!obj || !obj.isTimeRangeObj) {
@@ -1314,7 +1314,7 @@
             return (obj.getBegin() === beginData) && (obj.getEnd() === endData);
         };
 
-        TimeRange.prototype.getIntersectRange = function(obj) {
+        TimeRange.prototype.getIntersectRange = function (obj) {
             var self = this;
 
             if (!self.isOverlapped(obj)) {
@@ -1333,7 +1333,7 @@
             });
         };
 
-        TimeRange.prototype.getUnionRange = function(obj) {
+        TimeRange.prototype.getUnionRange = function (obj) {
             var self = this;
 
             if (!self.isOverlapped(obj)) {
@@ -1352,14 +1352,14 @@
             });
         };
 
-        TimeRange.getClassName = function() {
+        TimeRange.getClassName = function () {
             return className;
         };
 
         return TimeRange;
     }());
 
-    var Age = (function() {
+    var Age = (function () {
         var className = "Age";
 
         function Age(initVal) {
@@ -1369,11 +1369,11 @@
 
             var data = 0; // days
 
-            self._getData = function() {
+            self._getData = function () {
                 return data;
             };
 
-            self._setData = function(newData) {
+            self._setData = function (newData) {
                 newData = bitlib.common.toInteger(newData);
 
                 if (!isNaN(newData)) {
@@ -1390,19 +1390,19 @@
             return self;
         }
 
-        Age.prototype.clone = function() {
+        Age.prototype.clone = function () {
             return new Age(this._getData());
         };
 
-        Age.prototype.getData = function() {
+        Age.prototype.getData = function () {
             return this._getData();
         };
 
-        Age.prototype.getYears = function() {
+        Age.prototype.getYears = function () {
             return Math.floor(this._getData() / 365);
         };
 
-        Age.prototype.setYears = function(val) {
+        Age.prototype.setYears = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -1418,12 +1418,12 @@
             return self;
         };
 
-        Age.prototype.getMonths = function() {
+        Age.prototype.getMonths = function () {
             var rem = this._getData() % 365;
             return Math.floor(rem / 30);
         };
 
-        Age.prototype.setMonths = function(val) {
+        Age.prototype.setMonths = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -1441,12 +1441,12 @@
             return self;
         };
 
-        Age.prototype.getDays = function() {
+        Age.prototype.getDays = function () {
             var rem = (this._getData() % 365) % 30;
             return rem;
         };
 
-        Age.prototype.setDays = function(val) {
+        Age.prototype.setDays = function (val) {
             var self = this;
 
             val = bitlib.common.toInteger(val);
@@ -1463,43 +1463,43 @@
             return self;
         };
 
-        Age.getClassName = function() {
+        Age.getClassName = function () {
             return className;
         };
 
         return Age;
     }());
 
-    bitlib.datetime = (function() {
+    bitlib.datetime = (function () {
         var self = {};
 
         self.type = "bitlib.datetime";
 
-        self.startOfMonth = function(date) {
+        self.startOfMonth = function (date) {
             return moment(date).startOf("month").toDate();
         };
 
-        self.endOfMonth = function(date) {
+        self.endOfMonth = function (date) {
             return moment(date).endOf("month").toDate();
         };
 
-        self.startOfWeek = function(date) {
+        self.startOfWeek = function (date) {
             return moment(date).startOf("week").toDate();
         };
 
-        self.endOfWeek = function(date) {
+        self.endOfWeek = function (date) {
             return moment(date).endOf("week").toDate();
         };
 
-        self.startOfDay = function(date) {
+        self.startOfDay = function (date) {
             return moment(date).startOf("day").toDate();
         };
 
-        self.endOfDay = function(date) {
+        self.endOfDay = function (date) {
             return moment(date).endOf("day").toDate();
         };
 
-        self.startOfCalendar = function(date) {
+        self.startOfCalendar = function (date) {
             var first = moment(date).startOf("month");
             if (first.day() === 0) {
                 return first.day(-7).toDate();
@@ -1507,36 +1507,36 @@
             return first.startOf("week").toDate();
         };
 
-        self.endOfCalendar = function(date) {
+        self.endOfCalendar = function (date) {
             var start = self.startOfCalendar(date);
             return moment(start).add("week", 5).endOf("week").toDate();
         };
 
-        self.createTimeObj = function(initObj) {
+        self.createTimeObj = function (initObj) {
             return new Time(initObj);
         };
 
-        self.createTimeSpanObj = function(initVal) {
+        self.createTimeSpanObj = function (initVal) {
             return new TimeSpan(initVal);
         };
 
-        self.createDateTimeObj = function(initObj) {
+        self.createDateTimeObj = function (initObj) {
             return new DateTime(initObj);
         };
 
-        self.createDateTimeRangeObj = function(initObj) {
+        self.createDateTimeRangeObj = function (initObj) {
             return new DateTimeRange(initObj);
         };
 
-        self.createDateRangeObj = function(initObj) {
+        self.createDateRangeObj = function (initObj) {
             return new DateRange(initObj);
         };
 
-        self.createTimeRangeObj = function(initObj) {
+        self.createTimeRangeObj = function (initObj) {
             return new TimeRange(initObj);
         };
 
-        self.createAgeObj = function(initVal) {
+        self.createAgeObj = function (initVal) {
             return new Age(initVal);
         };
 
